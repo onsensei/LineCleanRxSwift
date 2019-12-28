@@ -1,0 +1,6 @@
+framework module Pods_LinePreTestTests {
+  umbrella header "Pods-LinePreTestTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
