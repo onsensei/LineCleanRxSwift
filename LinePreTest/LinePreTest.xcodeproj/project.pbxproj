@@ -15,6 +15,14 @@
 		50C7295D23B71D3E00D5E0B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50C7295B23B71D3E00D5E0B4 /* LaunchScreen.storyboard */; };
 		50C7296823B71D3F00D5E0B4 /* LinePreTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7296723B71D3F00D5E0B4 /* LinePreTestTests.swift */; };
 		50C7297323B71D3F00D5E0B4 /* LinePreTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7297223B71D3F00D5E0B4 /* LinePreTestUITests.swift */; };
+		50C7298A23B71F1900D5E0B4 /* TimelinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298423B71F1900D5E0B4 /* TimelinePresenter.swift */; };
+		50C7298B23B71F1900D5E0B4 /* TimelineWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298523B71F1900D5E0B4 /* TimelineWorker.swift */; };
+		50C7298C23B71F1900D5E0B4 /* TimelineRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298623B71F1900D5E0B4 /* TimelineRouter.swift */; };
+		50C7298D23B71F1900D5E0B4 /* TimelineModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298723B71F1900D5E0B4 /* TimelineModels.swift */; };
+		50C7298E23B71F1900D5E0B4 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298823B71F1900D5E0B4 /* TimelineViewController.swift */; };
+		50C7298F23B71F1900D5E0B4 /* TimelineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298923B71F1900D5E0B4 /* TimelineInteractor.swift */; };
+		50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */; };
+		50C7299623B7265500D5E0B4 /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,14 @@
 		50C7296E23B71D3F00D5E0B4 /* LinePreTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinePreTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C7297223B71D3F00D5E0B4 /* LinePreTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePreTestUITests.swift; sourceTree = "<group>"; };
 		50C7297423B71D3F00D5E0B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50C7298423B71F1900D5E0B4 /* TimelinePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePresenter.swift; sourceTree = "<group>"; };
+		50C7298523B71F1900D5E0B4 /* TimelineWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineWorker.swift; sourceTree = "<group>"; };
+		50C7298623B71F1900D5E0B4 /* TimelineRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineRouter.swift; sourceTree = "<group>"; };
+		50C7298723B71F1900D5E0B4 /* TimelineModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineModels.swift; sourceTree = "<group>"; };
+		50C7298823B71F1900D5E0B4 /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		50C7298923B71F1900D5E0B4 /* TimelineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineInteractor.swift; sourceTree = "<group>"; };
+		50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
+		50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimelineTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +115,7 @@
 		50C7294F23B71D3B00D5E0B4 /* LinePreTest */ = {
 			isa = PBXGroup;
 			children = (
+				50C7298323B71EE100D5E0B4 /* Scenes */,
 				50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */,
 				50C7295223B71D3B00D5E0B4 /* SceneDelegate.swift */,
 				50C7295423B71D3B00D5E0B4 /* ViewController.swift */,
@@ -126,6 +143,53 @@
 				50C7297423B71D3F00D5E0B4 /* Info.plist */,
 			);
 			path = LinePreTestUITests;
+			sourceTree = "<group>";
+		};
+		50C7298023B71E6900D5E0B4 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				50C7299223B7263F00D5E0B4 /* Component */,
+				50C7298423B71F1900D5E0B4 /* TimelinePresenter.swift */,
+				50C7298523B71F1900D5E0B4 /* TimelineWorker.swift */,
+				50C7298623B71F1900D5E0B4 /* TimelineRouter.swift */,
+				50C7298723B71F1900D5E0B4 /* TimelineModels.swift */,
+				50C7298823B71F1900D5E0B4 /* TimelineViewController.swift */,
+				50C7298923B71F1900D5E0B4 /* TimelineInteractor.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		50C7298123B71E7700D5E0B4 /* NewPost */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NewPost;
+			sourceTree = "<group>";
+		};
+		50C7298223B71E8200D5E0B4 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		50C7298323B71EE100D5E0B4 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				50C7298123B71E7700D5E0B4 /* NewPost */,
+				50C7298223B71E8200D5E0B4 /* Post */,
+				50C7298023B71E6900D5E0B4 /* Timeline */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		50C7299223B7263F00D5E0B4 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */,
+				50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50C7299623B7265500D5E0B4 /* TimelineTableViewCell.xib in Resources */,
 				50C7295D23B71D3E00D5E0B4 /* LaunchScreen.storyboard in Resources */,
 				50C7295A23B71D3E00D5E0B4 /* Assets.xcassets in Resources */,
 				50C7295823B71D3B00D5E0B4 /* Main.storyboard in Resources */,
@@ -260,7 +325,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				50C7295523B71D3B00D5E0B4 /* ViewController.swift in Sources */,
+				50C7298D23B71F1900D5E0B4 /* TimelineModels.swift in Sources */,
+				50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */,
+				50C7298A23B71F1900D5E0B4 /* TimelinePresenter.swift in Sources */,
 				50C7295123B71D3B00D5E0B4 /* AppDelegate.swift in Sources */,
+				50C7298C23B71F1900D5E0B4 /* TimelineRouter.swift in Sources */,
+				50C7298E23B71F1900D5E0B4 /* TimelineViewController.swift in Sources */,
+				50C7298B23B71F1900D5E0B4 /* TimelineWorker.swift in Sources */,
+				50C7298F23B71F1900D5E0B4 /* TimelineInteractor.swift in Sources */,
 				50C7295323B71D3B00D5E0B4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
