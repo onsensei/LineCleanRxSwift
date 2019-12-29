@@ -137,6 +137,7 @@
 		50C7294F23B71D3B00D5E0B4 /* LinePreTest */ = {
 			isa = PBXGroup;
 			children = (
+				50C7299223B7263F00D5E0B4 /* Component */,
 				50C7298323B71EE100D5E0B4 /* Scenes */,
 				50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */,
 				50C7295223B71D3B00D5E0B4 /* SceneDelegate.swift */,
@@ -197,7 +198,6 @@
 		50C7298323B71EE100D5E0B4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				50C7299223B7263F00D5E0B4 /* Component */,
 				50C7298123B71E7700D5E0B4 /* NewPost */,
 				50C7298223B71E8200D5E0B4 /* Post */,
 				50C7298023B71E6900D5E0B4 /* Timeline */,
@@ -208,10 +208,10 @@
 		50C7299223B7263F00D5E0B4 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */,
-				50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */,
 				506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */,
 				506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */,
+				50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */,
+				50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */,
 			);
 			path = Component;
 			sourceTree = "<group>";
