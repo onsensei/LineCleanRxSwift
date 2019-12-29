@@ -15,10 +15,28 @@ import UIKit
 // MARK: - Response Json Object (NewsFeed)
 
 struct ResponseAlbum: Codable {
-    let result: [Result]
+    let meta: Meta
+    let result: [ResultAlbum]
+
+    enum CodingKeys: String, CodingKey {
+        case meta = "_meta"
+        case result
+    }
 }
 
-struct Result: Codable {
+struct Meta: Codable {
+    let success: Bool
+    let code: Int
+    let message: String
+    let totalCount, pageCount, currentPage, perPage: Int
+    let rateLimit: RateLimit
+}
+
+struct RateLimit: Codable {
+    let limit, remaining, reset: Int
+}
+
+struct ResultAlbum: Codable {
     let id, userID, title: String
     let links: Links
 
@@ -41,6 +59,29 @@ struct Links: Codable {
 
 struct Edit: Codable {
     let href: String
+}
+
+struct ResponsePhoto: Codable {
+    let meta: Meta
+    let result: [ResultPhoto]
+
+    enum CodingKeys: String, CodingKey {
+        case meta = "_meta"
+        case result
+    }
+}
+
+struct ResultPhoto: Codable {
+    let id, albumID, title: String
+    let url, thumbnail: String
+    let links: Links
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case albumID = "album_id"
+        case title, url, thumbnail
+        case links = "_links"
+    }
 }
 
 // MARK: - ViewModel Object (NewsFeed)
@@ -70,7 +111,8 @@ enum Timeline
     }
     struct Response
     {
-      var content:ResponseAlbum
+      var album:ResponseAlbum
+      var albumPhotosDict:[String:ResponsePhoto]
     }
     struct ViewModel
     {

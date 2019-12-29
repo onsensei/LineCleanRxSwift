@@ -57,8 +57,7 @@ class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
                 let jsonDecoder = JSONDecoder()
                 let responseAlbum = try jsonDecoder.decode(ResponseAlbum.self, from: data!)
                 
-                let response = Timeline.NewsFeed.Response(content:responseAlbum)
-                self.presenter?.presentNewsFeed(response: response)
+                self.fetchPostPhoto(request: request, responseAlbum: responseAlbum)
               } catch {
                 print("!!! json parser error: \(error)")
               }
@@ -71,6 +70,57 @@ class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
         } else {
           print("!!! not found status code")
         }
+    }
+  }
+  
+  func fetchPostPhoto(request: Timeline.NewsFeed.Request, responseAlbum: ResponseAlbum)
+  {
+    var pendingAlbumIds:[String] = []
+    for item in responseAlbum.result {
+      pendingAlbumIds.append(item.id)
+    }
+    
+    var albumPhotosDict:[String:ResponsePhoto] = [:]
+    for item in responseAlbum.result {
+      let headers = [
+        "Authorization" : "Bearer \(request.token)"
+      ]
+      Alamofire.request("https://gorest.co.in/public-api/photos?album_id=\(item.id)", method: .get, headers: headers)
+            .responseJSON { response in
+              //to get status code
+              if let status = response.response?.statusCode {
+                switch(status){
+                case 200:
+                  //to get JSON return value
+                  if let jsonResult = response.result.value {
+                    do {
+                      let jsonData = try JSONSerialization.data(withJSONObject: jsonResult, options: .prettyPrinted)
+                      let jsonString = String(data: jsonData, encoding: .utf8)
+                      let data = jsonString?.data(using: .utf8)
+                      let jsonDecoder = JSONDecoder()
+                      let responsePhoto = try jsonDecoder.decode(ResponsePhoto.self, from: data!)
+                      
+                      albumPhotosDict[item.id] = responsePhoto
+                    } catch {
+                      print("!!! json parser error: \(error)")
+                    }
+                  } else {
+                    print("!!! not found json body")
+                  }
+                default:
+                  print("!!! error with response status: \(status)")
+                }
+              } else {
+                print("!!! not found status code")
+              }
+              
+              // remove used id
+              pendingAlbumIds = pendingAlbumIds.filter {$0 != item.id}
+              if (pendingAlbumIds.count == 0) {
+                let response = Timeline.NewsFeed.Response(album: responseAlbum, albumPhotosDict: albumPhotosDict)
+                self.presenter?.presentNewsFeed(response: response)
+              }
+          }
     }
   }
 }

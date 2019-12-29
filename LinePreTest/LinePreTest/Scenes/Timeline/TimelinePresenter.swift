@@ -26,10 +26,18 @@ class TimelinePresenter: TimelinePresentationLogic
   func presentNewsFeed(response: Timeline.NewsFeed.Response)
   {
     var posts:[PostAlbum] = []
-    response.content.result.forEach { (element) in
+    response.album.result.forEach { (element) in
       let title = element.title
-      let item = PostAlbum(title: title, photos: [])
-      posts.append(item)
+      
+      let responsePhoto = response.albumPhotosDict[element.id]
+      var photos:[PostPhoto] = []
+      for item in responsePhoto!.result {
+        let photo = PostPhoto(title: item.title, url: item.url, thumbnail: item.thumbnail)
+        photos.append(photo)
+      }
+      
+      let post = PostAlbum(title: title, photos: photos)
+      posts.append(post)
     }
     
     let viewModel = Timeline.NewsFeed.ViewModel(postAlbums: posts)
