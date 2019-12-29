@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
   @IBOutlet weak var titleLabel: UILabel!
@@ -19,6 +20,9 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
+    photoCollectionView.dataSource = self
+    photoCollectionView.delegate = self
+    photoCollectionView.register(UINib(nibName: "PostPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "PostPhotoCollectionViewCell")
   }
 
   override func setSelected(_ selected: Bool, animated: Bool) {
@@ -51,6 +55,8 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
       photoSquareRatioConstraint.isActive = true
       photoWideRatioConstraint.isActive = false
     }
+    
+    photoCollectionView.reloadData()
   }
   
   // MARK: UICollectionViewDataSource
@@ -60,13 +66,11 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    // get a reference to our storyboard cell
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! MyCollectionViewCell
+    let cell:PostPhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostPhotoCollectionViewCell", for: indexPath as IndexPath) as! PostPhotoCollectionViewCell
 
-    // Use the outlet in our custom class to get a reference to the UILabel in the cell
-    cell.myLabel.text = self.items[indexPath.item]
-    cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
-
+    let item:PostPhoto = datasource.photos[indexPath.row]
+    cell.photoImageView.sd_setImage(with: URL(string: item.thumbnail), placeholderImage: UIImage(named: "placeholder"))
+    
     return cell
   }
 }

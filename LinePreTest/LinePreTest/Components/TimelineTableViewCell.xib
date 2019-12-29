@@ -47,10 +47,6 @@ Label</string>
                                 <exclude reference="Cy3-PR-r23"/>
                             </mask>
                         </variation>
-                        <connections>
-                            <outlet property="dataSource" destination="-1" id="bXQ-Gt-Znq"/>
-                            <outlet property="delegate" destination="-1" id="9M4-xS-B6d"/>
-                        </connections>
                     </collectionView>
                 </subviews>
                 <constraints>
