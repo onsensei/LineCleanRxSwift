@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
+class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var photoCollectionView: UICollectionView!
   
@@ -62,7 +62,7 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   // MARK: UICollectionViewDataSource
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return datasource.photos.count
+    return min(datasource.photos.count, 3)
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -72,5 +72,37 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
     cell.photoImageView.sd_setImage(with: URL(string: item.thumbnail), placeholderImage: UIImage(named: "placeholder"))
     
     return cell
+  }
+  
+  // MARK: UICollectionViewDelegateFlowLayout
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    var widthScale:CGFloat = 1
+    var widthRatio:CGFloat = 1
+    var heightRatio:CGFloat = 1
+    
+    if (datasource.photos.count == 1) {
+      widthScale = 1
+      widthRatio = 16
+      heightRatio = 9
+    } else if (datasource.photos.count == 2) {
+      widthScale = 0.5
+      widthRatio = 1
+      heightRatio = 2
+    } else if (datasource.photos.count >= 3) {
+      if (indexPath.row == 0) {
+        widthScale = 0.5
+        widthRatio = 1
+        heightRatio = 2
+      } else {
+        widthScale = 0.5
+        widthRatio = 1
+        heightRatio = 1
+      }
+    }
+    
+    let width = self.frame.width * widthScale
+    let height = width * heightRatio / widthRatio
+    return CGSize(width: width, height: height)
   }
 }

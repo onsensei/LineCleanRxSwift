@@ -35,7 +35,7 @@ Label</string>
                             <constraint firstAttribute="width" secondItem="63E-se-152" secondAttribute="height" multiplier="1:1" id="Cy3-PR-r23"/>
                             <constraint firstAttribute="width" secondItem="63E-se-152" secondAttribute="height" multiplier="16:9" id="dtg-66-UyF"/>
                         </constraints>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gkU-uM-Zhb">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="gkU-uM-Zhb">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
