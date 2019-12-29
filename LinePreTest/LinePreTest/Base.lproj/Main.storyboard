@@ -18,6 +18,26 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gOS-7O-TfU">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="4f1-gx-YJz">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="Ruc-4O-3iR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="BYZ-38-t0r" id="pLK-Vd-VZL"/>
+                                            </connections>
+                                        </searchBar>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Ruc-4O-3iR" secondAttribute="trailing" id="1gY-nl-QCc"/>
+                                        <constraint firstAttribute="bottom" secondItem="Ruc-4O-3iR" secondAttribute="bottom" id="cOJ-ia-rQH"/>
+                                        <constraint firstItem="Ruc-4O-3iR" firstAttribute="leading" secondItem="4f1-gx-YJz" secondAttribute="leading" id="rV2-6U-e7o"/>
+                                        <constraint firstItem="Ruc-4O-3iR" firstAttribute="top" secondItem="4f1-gx-YJz" secondAttribute="top" id="s7c-EQ-syP"/>
+                                    </constraints>
+                                </view>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="INV-8f-Fx8"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ADW-UD-rNz"/>

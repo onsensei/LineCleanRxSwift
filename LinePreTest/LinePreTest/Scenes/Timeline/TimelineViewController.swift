@@ -17,7 +17,7 @@ protocol TimelineDisplayLogic: class
   func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
 }
 
-class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableViewDataSource, UITableViewDelegate
+class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate
 {
   var interactor: TimelineBusinessLogic?
   var router: (NSObjectProtocol & TimelineRoutingLogic & TimelineDataPassing)?
@@ -83,6 +83,8 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   func initLayout()
   {
+    title = "Timeline"
+    
     newsfeedTableView.register(UINib(nibName: "TimelineTableViewCell", bundle: nil), forCellReuseIdentifier: "TimelineTableViewCell")
   }
   
