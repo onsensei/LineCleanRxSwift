@@ -17,6 +17,8 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   @IBOutlet weak var photoSquareRatioConstraint: NSLayoutConstraint!
   @IBOutlet weak var photoWideRatioConstraint: NSLayoutConstraint!
   
+  @IBOutlet weak var separatorViewHeightConstraint: NSLayoutConstraint!
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code

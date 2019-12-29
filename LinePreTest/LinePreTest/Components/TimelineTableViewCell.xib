@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVt-99-4Hp">
-                        <rect key="frame" x="8" y="8" width="304" height="97"/>
+                        <rect key="frame" x="8" y="8" width="304" height="89"/>
                         <string key="text">Label
 Label
 Label
@@ -28,7 +28,7 @@ Label</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="63E-se-152">
-                        <rect key="frame" x="0.0" y="113" width="320" height="180"/>
+                        <rect key="frame" x="0.0" y="105" width="320" height="180"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="height" id="9Ms-Ww-sJu"/>
@@ -48,14 +48,24 @@ Label</string>
                             </mask>
                         </variation>
                     </collectionView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZXH-V1-Vta">
+                        <rect key="frame" x="0.0" y="285" width="320" height="8"/>
+                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="8jK-4A-cFJ"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="ZXH-V1-Vta" firstAttribute="top" secondItem="63E-se-152" secondAttribute="bottom" id="BvY-qy-e4N"/>
+                    <constraint firstAttribute="trailing" secondItem="ZXH-V1-Vta" secondAttribute="trailing" id="EMI-s7-q8q"/>
                     <constraint firstItem="63E-se-152" firstAttribute="top" secondItem="pVt-99-4Hp" secondAttribute="bottom" constant="8" id="JUc-AM-f0G"/>
                     <constraint firstItem="63E-se-152" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Jxp-6S-1N8"/>
                     <constraint firstAttribute="trailing" secondItem="pVt-99-4Hp" secondAttribute="trailing" constant="8" id="Mbz-eB-xx4"/>
-                    <constraint firstAttribute="bottom" secondItem="63E-se-152" secondAttribute="bottom" id="V1Z-Gv-nTM"/>
+                    <constraint firstItem="ZXH-V1-Vta" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="alD-xg-9ul"/>
                     <constraint firstItem="pVt-99-4Hp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="dYj-B6-kgl"/>
                     <constraint firstAttribute="trailing" secondItem="63E-se-152" secondAttribute="trailing" id="k0M-cr-MWJ"/>
+                    <constraint firstAttribute="bottom" secondItem="ZXH-V1-Vta" secondAttribute="bottom" id="moZ-IY-Ub9"/>
                     <constraint firstItem="pVt-99-4Hp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="u5Q-Za-XKl"/>
                 </constraints>
             </tableViewCellContentView>
@@ -65,6 +75,7 @@ Label</string>
                 <outlet property="photoSquareRatioConstraint" destination="Cy3-PR-r23" id="Pob-gN-Av0"/>
                 <outlet property="photoWideRatioConstraint" destination="dtg-66-UyF" id="mrd-aW-TE6"/>
                 <outlet property="photoZeroHeightConstraint" destination="9Ms-Ww-sJu" id="Wmy-7c-xA4"/>
+                <outlet property="separatorViewHeightConstraint" destination="8jK-4A-cFJ" id="Pl0-KB-h0L"/>
                 <outlet property="titleLabel" destination="pVt-99-4Hp" id="Xw5-32-B7e"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="236.04910714285714"/>
