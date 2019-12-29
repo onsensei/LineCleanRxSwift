@@ -29,7 +29,7 @@ Label</string>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="63E-se-152">
                         <rect key="frame" x="0.0" y="113" width="320" height="180"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="height" id="9Ms-Ww-sJu"/>
                             <constraint firstAttribute="width" secondItem="63E-se-152" secondAttribute="height" multiplier="1:1" id="Cy3-PR-r23"/>

@@ -33,6 +33,8 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   
   // MARK: Do something
   
+  let CELL_SPACE:CGFloat = 4
+  
   var datasource: PostAlbum = PostAlbum(title: "", photos: [])
   
   func displayCell(postAlbum: PostAlbum)
@@ -77,24 +79,36 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   // MARK: UICollectionViewDelegateFlowLayout
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    var widthSpace:CGFloat = CELL_SPACE
+    var heightSpace:CGFloat = CELL_SPACE
+    
     var widthScale:CGFloat = 1
+    
     var widthRatio:CGFloat = 1
     var heightRatio:CGFloat = 1
     
     if (datasource.photos.count == 1) {
+      widthSpace = 0
+      heightSpace = 0
       widthScale = 1
       widthRatio = 16
       heightRatio = 9
     } else if (datasource.photos.count == 2) {
+      widthSpace = CELL_SPACE
+      heightSpace = 0
       widthScale = 0.5
       widthRatio = 1
       heightRatio = 2
     } else if (datasource.photos.count >= 3) {
       if (indexPath.row == 0) {
+        widthSpace = CELL_SPACE
+        heightSpace = 0
         widthScale = 0.5
         widthRatio = 1
         heightRatio = 2
       } else {
+        widthSpace = CELL_SPACE
+        heightSpace = CELL_SPACE
         widthScale = 0.5
         widthRatio = 1
         heightRatio = 1
@@ -103,6 +117,14 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
     
     let width = self.frame.width * widthScale
     let height = width * heightRatio / widthRatio
-    return CGSize(width: width, height: height)
+    return CGSize(width: width - widthSpace / 2, height: height - heightSpace / 2)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return CELL_SPACE
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return CELL_SPACE
   }
 }
