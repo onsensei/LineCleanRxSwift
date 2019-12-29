@@ -26,6 +26,12 @@
 		50C7298F23B71F1900D5E0B4 /* TimelineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7298923B71F1900D5E0B4 /* TimelineInteractor.swift */; };
 		50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */; };
 		50C7299623B7265500D5E0B4 /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */; };
+		50FB95E523B8E0E8005A612C /* NewPostPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95DF23B8E0E8005A612C /* NewPostPresenter.swift */; };
+		50FB95E623B8E0E8005A612C /* NewPostWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E023B8E0E8005A612C /* NewPostWorker.swift */; };
+		50FB95E723B8E0E8005A612C /* NewPostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E123B8E0E8005A612C /* NewPostRouter.swift */; };
+		50FB95E823B8E0E8005A612C /* NewPostModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E223B8E0E8005A612C /* NewPostModels.swift */; };
+		50FB95E923B8E0E8005A612C /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E323B8E0E8005A612C /* NewPostViewController.swift */; };
+		50FB95EA23B8E0E8005A612C /* NewPostInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E423B8E0E8005A612C /* NewPostInteractor.swift */; };
 		92B68CABF98638134063938A /* Pods_LinePreTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */; };
 		CACEEE350D4CAFFF64C077C2 /* Pods_LinePreTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6E7ADF731AB4DC09E5F53B /* Pods_LinePreTest.framework */; };
 /* End PBXBuildFile section */
@@ -77,6 +83,12 @@
 		50C7298923B71F1900D5E0B4 /* TimelineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineInteractor.swift; sourceTree = "<group>"; };
 		50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimelineTableViewCell.xib; sourceTree = "<group>"; };
+		50FB95DF23B8E0E8005A612C /* NewPostPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostPresenter.swift; sourceTree = "<group>"; };
+		50FB95E023B8E0E8005A612C /* NewPostWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostWorker.swift; sourceTree = "<group>"; };
+		50FB95E123B8E0E8005A612C /* NewPostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostRouter.swift; sourceTree = "<group>"; };
+		50FB95E223B8E0E8005A612C /* NewPostModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostModels.swift; sourceTree = "<group>"; };
+		50FB95E323B8E0E8005A612C /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		50FB95E423B8E0E8005A612C /* NewPostInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostInteractor.swift; sourceTree = "<group>"; };
 		7BBCEA9A74A937ACEC69D679 /* Pods_LinePreTestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinePreTestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75465BBF72CF4E97DB07F24 /* Pods-LinePreTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestTests/Pods-LinePreTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6939F0ED9CAFAA40EAB5C32 /* Pods-LinePreTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTest/Pods-LinePreTest.debug.xcconfig"; sourceTree = "<group>"; };
@@ -184,6 +196,12 @@
 		50C7298123B71E7700D5E0B4 /* NewPost */ = {
 			isa = PBXGroup;
 			children = (
+				50FB95DF23B8E0E8005A612C /* NewPostPresenter.swift */,
+				50FB95E023B8E0E8005A612C /* NewPostWorker.swift */,
+				50FB95E123B8E0E8005A612C /* NewPostRouter.swift */,
+				50FB95E223B8E0E8005A612C /* NewPostModels.swift */,
+				50FB95E323B8E0E8005A612C /* NewPostViewController.swift */,
+				50FB95E423B8E0E8005A612C /* NewPostInteractor.swift */,
 			);
 			path = NewPost;
 			sourceTree = "<group>";
@@ -473,12 +491,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				50C7295523B71D3B00D5E0B4 /* ViewController.swift in Sources */,
+				50FB95EA23B8E0E8005A612C /* NewPostInteractor.swift in Sources */,
 				50C7298D23B71F1900D5E0B4 /* TimelineModels.swift in Sources */,
 				50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */,
 				50C7298A23B71F1900D5E0B4 /* TimelinePresenter.swift in Sources */,
 				50C7295123B71D3B00D5E0B4 /* AppDelegate.swift in Sources */,
+				50FB95E923B8E0E8005A612C /* NewPostViewController.swift in Sources */,
+				50FB95E523B8E0E8005A612C /* NewPostPresenter.swift in Sources */,
 				506B76AF23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift in Sources */,
+				50FB95E723B8E0E8005A612C /* NewPostRouter.swift in Sources */,
+				50FB95E823B8E0E8005A612C /* NewPostModels.swift in Sources */,
 				50C7298C23B71F1900D5E0B4 /* TimelineRouter.swift in Sources */,
+				50FB95E623B8E0E8005A612C /* NewPostWorker.swift in Sources */,
 				50C7298E23B71F1900D5E0B4 /* TimelineViewController.swift in Sources */,
 				50C7298B23B71F1900D5E0B4 /* TimelineWorker.swift in Sources */,
 				50C7298F23B71F1900D5E0B4 /* TimelineInteractor.swift in Sources */,
