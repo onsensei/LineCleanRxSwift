@@ -53,14 +53,37 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="7i1-qE-BrG"/>
+                    <navigationItem key="navigationItem" id="7i1-qE-BrG">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="hs4-M6-ce8">
+                            <connections>
+                                <action selector="onPressNewPostButton:" destination="BYZ-38-t0r" id="QM6-cS-xcQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="newsfeedTableView" destination="gOS-7O-TfU" id="qDX-8r-ivM"/>
+                        <segue destination="5kH-0a-p3I" kind="presentation" identifier="NewPost" id="9kH-g8-8jX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="138.61607142857142"/>
+        </scene>
+        <!--New Post View Controller-->
+        <scene sceneID="AoW-LM-2Z4">
+            <objects>
+                <viewController storyboardIdentifier="NewPostViewController" id="5kH-0a-p3I" customClass="NewPostViewController" customModule="LinePreTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="X3q-zm-khN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Tn6-wi-WpZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="KCs-0v-cUe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tTR-EY-bwJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1978" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TwB-MP-u0h">

@@ -44,7 +44,7 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
     datasource = postAlbum
     
     titleLabel.text = datasource.title
-    titleLabel.text = "\(datasource.title) (\(datasource.photos.count))"
+    titleLabel.text = "\(datasource.title) (\(datasource.photos.count))" // !!!
     
     if (datasource.photos.count == 0) {
       photoZeroHeightConstraint.isActive = true

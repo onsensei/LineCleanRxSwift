@@ -77,6 +77,12 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   @IBOutlet weak var newsfeedTableView: UITableView!
   
+  // MARK: IBAction
+  
+  @IBAction func onPressNewPostButton(_ sender: Any) {
+    router?.routeToNewPost(segue: nil)
+  }
+  
   // MARK: Do something
   
   var newsFeedDatasource:[PostAlbum] = []

@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol TimelineRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+  func routeToNewPost(segue: UIStoryboardSegue?)
 }
 
 protocol TimelineDataPassing
@@ -28,6 +28,16 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
   var dataStore: TimelineDataStore?
   
   // MARK: Routing
+  
+  func routeToNewPost(segue: UIStoryboardSegue?) {
+    if let segue = segue {
+      //
+    } else {
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let destinationVC = storyboard.instantiateViewController(withIdentifier: "NewPostViewController") as! NewPostViewController
+      navigateToNewPost(source: viewController!, destination: destinationVC)
+    }
+  }
   
   //func routeToSomewhere(segue: UIStoryboardSegue?)
   //{
@@ -50,6 +60,10 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
   //{
   //  source.show(destination, sender: nil)
   //}
+  
+  func navigateToNewPost(source: TimelineViewController, destination: NewPostViewController) {
+    source.show(destination, sender: nil)
+  }
   
   // MARK: Passing data
   
