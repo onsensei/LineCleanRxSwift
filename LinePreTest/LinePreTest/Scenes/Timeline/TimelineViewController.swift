@@ -110,7 +110,7 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
     let item:PostAlbum = newsFeedDatasource[indexPath.row]
-    cell.titleLabel.text = item.title
+    cell.displayCell(postAlbum: item)
 
     return cell
   }
