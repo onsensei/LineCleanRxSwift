@@ -6,6 +6,8 @@ target 'LinePreTest' do
   use_frameworks!
 
   pod 'Alamofire', '~> 4.9.1'
+  pod 'SDWebImage', '~> 5.0'
+  pod 'JGProgressHUD'
 
   # Pods for LinePreTest
 

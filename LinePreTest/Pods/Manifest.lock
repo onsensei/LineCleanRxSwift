@@ -1,16 +1,26 @@
 PODS:
   - Alamofire (4.9.1)
+  - JGProgressHUD (2.1)
+  - SDWebImage (5.4.1):
+    - SDWebImage/Core (= 5.4.1)
+  - SDWebImage/Core (5.4.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
+  - JGProgressHUD
+  - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - JGProgressHUD
+    - SDWebImage
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
 
-PODFILE CHECKSUM: 5979649a2a3066b375613f810c4b9649446ec94d
+PODFILE CHECKSUM: 0df4d7e25939e2b49c678fa787a6ecc2d0f77bcd
 
 COCOAPODS: 1.5.3
