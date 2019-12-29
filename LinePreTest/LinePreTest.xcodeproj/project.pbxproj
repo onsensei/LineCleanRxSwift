@@ -50,6 +50,7 @@
 		29AE11F6A7E90B6A760343BD /* Pods-LinePreTestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestUITests/Pods-LinePreTestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2D1DDD45C6D79DC49B03C7C0 /* Pods-LinePreTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestTests/Pods-LinePreTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinePreTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		506B76A923B74F5000433AD0 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C7294D23B71D3B00D5E0B4 /* LinePreTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinePreTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C7295223B71D3B00D5E0B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -225,6 +226,7 @@
 		BFD8534DDB62C2CF339CA442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				506B76A923B74F5000433AD0 /* Alamofire.framework */,
 				FF6E7ADF731AB4DC09E5F53B /* Pods_LinePreTest.framework */,
 				35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */,
 				7BBCEA9A74A937ACEC69D679 /* Pods_LinePreTestUITests.framework */,

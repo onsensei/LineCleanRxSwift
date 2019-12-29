@@ -12,20 +12,69 @@
 
 import UIKit
 
+// MARK: - Response Json Object (NewsFeed)
+
+struct ResponseAlbum: Codable {
+    let result: [Result]
+}
+
+struct Result: Codable {
+    let id, userID, title: String
+    let links: Links
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userID = "user_id"
+        case title
+        case links = "_links"
+    }
+}
+
+struct Links: Codable {
+    let linksSelf, edit: Edit
+
+    enum CodingKeys: String, CodingKey {
+        case linksSelf = "self"
+        case edit
+    }
+}
+
+struct Edit: Codable {
+    let href: String
+}
+
+// MARK: - ViewModel Object (NewsFeed)
+
+struct PostAlbum
+{
+  var title:String
+  var photos:[PostPhoto]
+}
+
+struct PostPhoto
+{
+  var title:String
+  var url:String
+  var thumbnail:String
+}
+
 enum Timeline
 {
   // MARK: Use cases
   
-  enum Something
+  enum NewsFeed
   {
     struct Request
     {
+      var token:String
     }
     struct Response
     {
+      var content:ResponseAlbum
     }
     struct ViewModel
     {
+      var postAlbums:[PostAlbum]
     }
   }
 }

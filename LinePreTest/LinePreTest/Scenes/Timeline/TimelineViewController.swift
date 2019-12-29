@@ -14,14 +14,14 @@ import UIKit
 
 protocol TimelineDisplayLogic: class
 {
-  func displaySomething(viewModel: Timeline.Something.ViewModel)
+  func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
 }
 
-class TimelineViewController: UIViewController, TimelineDisplayLogic
+class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableViewDataSource, UITableViewDelegate
 {
   var interactor: TimelineBusinessLogic?
   var router: (NSObjectProtocol & TimelineRoutingLogic & TimelineDataPassing)?
-
+  
   // MARK: Object lifecycle
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -69,21 +69,51 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    doSomething()
+    initLayout()
+    requestTimelineNewsFeed()
   }
+  
+  // MARK: IBOutlet
+  
+  @IBOutlet weak var newsfeedTableView: UITableView!
   
   // MARK: Do something
   
-  //@IBOutlet weak var nameTextField: UITextField!
+  var newsFeedDatasource:[PostAlbum] = []
   
-  func doSomething()
+  func initLayout()
   {
-    let request = Timeline.Something.Request()
-    interactor?.doSomething(request: request)
+    newsfeedTableView.register(UINib(nibName: "TimelineTableViewCell", bundle: nil), forCellReuseIdentifier: "TimelineTableViewCell")
   }
   
-  func displaySomething(viewModel: Timeline.Something.ViewModel)
+  func requestTimelineNewsFeed()
   {
-    //nameTextField.text = viewModel.name
+    let request = Timeline.NewsFeed.Request(token: "kIRtPjxyscyQoVCyBDfvIkUm1Sci7UW-a-zH")
+    interactor?.fetchNewsFeed(request: request)
   }
+  
+  // MARK: TimelineDisplayLogic
+  
+  func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
+  {
+    newsFeedDatasource = viewModel.postAlbums
+    newsfeedTableView.reloadData()
+  }
+  
+  // MARK: UITableViewDataSource
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return newsFeedDatasource.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
+
+    let item:PostAlbum = newsFeedDatasource[indexPath.row]
+    cell.titleLabel.text = item.title
+
+    return cell
+  }
+  
+  // MARK: UITableViewDelegate
 }

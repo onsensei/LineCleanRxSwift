@@ -11,14 +11,16 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol TimelineBusinessLogic
 {
-  func doSomething(request: Timeline.Something.Request)
+  func fetchNewsFeed(request: Timeline.NewsFeed.Request)
 }
 
 protocol TimelineDataStore
 {
+  //!!!
   //var name: String { get set }
 }
 
@@ -26,16 +28,49 @@ class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
 {
   var presenter: TimelinePresentationLogic?
   var worker: TimelineWorker?
+  //!!!
   //var name: String = ""
   
   // MARK: Do something
   
-  func doSomething(request: Timeline.Something.Request)
+  func fetchNewsFeed(request: Timeline.NewsFeed.Request)
   {
-    worker = TimelineWorker()
-    worker?.doSomeWork()
+    //!!!
+//    worker = TimelineWorker()
+//    worker?.doSomeWork()
     
-    let response = Timeline.Something.Response()
-    presenter?.presentSomething(response: response)
+    let headers = [
+      "Authorization" : "Bearer \(request.token)"
+    ]
+    Alamofire.request("https://gorest.co.in/public-api/albums", method: .get, headers: headers)
+      .responseJSON { response in
+        //to get status code
+        if let status = response.response?.statusCode {
+          switch(status){
+          case 200:
+            //to get JSON return value
+            if let jsonResult = response.result.value {
+              do {
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonResult, options: .prettyPrinted)
+                let jsonString = String(data: jsonData, encoding: .utf8)
+                let data = jsonString?.data(using: .utf8)
+                let jsonDecoder = JSONDecoder()
+                let responseAlbum = try jsonDecoder.decode(ResponseAlbum.self, from: data!)
+                
+                let response = Timeline.NewsFeed.Response(content:responseAlbum)
+                self.presenter?.presentNewsFeed(response: response)
+              } catch {
+                print("!!! json parser error: \(error)")
+              }
+            } else {
+              print("!!! not found json body")
+            }
+          default:
+            print("!!! error with response status: \(status)")
+          }
+        } else {
+          print("!!! not found status code")
+        }
+    }
   }
 }

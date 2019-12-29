@@ -14,7 +14,7 @@ import UIKit
 
 protocol TimelinePresentationLogic
 {
-  func presentSomething(response: Timeline.Something.Response)
+  func presentNewsFeed(response: Timeline.NewsFeed.Response)
 }
 
 class TimelinePresenter: TimelinePresentationLogic
@@ -23,9 +23,16 @@ class TimelinePresenter: TimelinePresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: Timeline.Something.Response)
+  func presentNewsFeed(response: Timeline.NewsFeed.Response)
   {
-    let viewModel = Timeline.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+    var posts:[PostAlbum] = []
+    response.content.result.forEach { (element) in
+      let title = element.title
+      let item = PostAlbum(title: title, photos: [])
+      posts.append(item)
+    }
+    
+    let viewModel = Timeline.NewsFeed.ViewModel(postAlbums: posts)
+    viewController?.displayNewsFeed(viewModel: viewModel)
   }
 }
