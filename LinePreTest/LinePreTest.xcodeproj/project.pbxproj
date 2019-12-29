@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B795CADC3B82705EBF3E9ED /* Pods_LinePreTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBCEA9A74A937ACEC69D679 /* Pods_LinePreTestUITests.framework */; };
+		506B76AF23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */; };
+		506B76B023B8A54700433AD0 /* PostPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */; };
 		50C7295123B71D3B00D5E0B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */; };
 		50C7295323B71D3B00D5E0B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7295223B71D3B00D5E0B4 /* SceneDelegate.swift */; };
 		50C7295523B71D3B00D5E0B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7295423B71D3B00D5E0B4 /* ViewController.swift */; };
@@ -51,6 +53,8 @@
 		2D1DDD45C6D79DC49B03C7C0 /* Pods-LinePreTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestTests/Pods-LinePreTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinePreTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		506B76A923B74F5000433AD0 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		50C7294D23B71D3B00D5E0B4 /* LinePreTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinePreTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C7295223B71D3B00D5E0B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,7 +170,6 @@
 		50C7298023B71E6900D5E0B4 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
-				50C7299223B7263F00D5E0B4 /* Component */,
 				50C7298423B71F1900D5E0B4 /* TimelinePresenter.swift */,
 				50C7298523B71F1900D5E0B4 /* TimelineWorker.swift */,
 				50C7298623B71F1900D5E0B4 /* TimelineRouter.swift */,
@@ -194,6 +197,7 @@
 		50C7298323B71EE100D5E0B4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				50C7299223B7263F00D5E0B4 /* Component */,
 				50C7298123B71E7700D5E0B4 /* NewPost */,
 				50C7298223B71E8200D5E0B4 /* Post */,
 				50C7298023B71E6900D5E0B4 /* Timeline */,
@@ -206,6 +210,8 @@
 			children = (
 				50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */,
 				50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */,
+				506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */,
+				506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				50C7299623B7265500D5E0B4 /* TimelineTableViewCell.xib in Resources */,
 				50C7295D23B71D3E00D5E0B4 /* LaunchScreen.storyboard in Resources */,
 				50C7295A23B71D3E00D5E0B4 /* Assets.xcassets in Resources */,
+				506B76B023B8A54700433AD0 /* PostPhotoCollectionViewCell.xib in Resources */,
 				50C7295823B71D3B00D5E0B4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,12 +449,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-LinePreTest/Pods-LinePreTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -466,6 +477,7 @@
 				50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */,
 				50C7298A23B71F1900D5E0B4 /* TimelinePresenter.swift in Sources */,
 				50C7295123B71D3B00D5E0B4 /* AppDelegate.swift in Sources */,
+				506B76AF23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift in Sources */,
 				50C7298C23B71F1900D5E0B4 /* TimelineRouter.swift in Sources */,
 				50C7298E23B71F1900D5E0B4 /* TimelineViewController.swift in Sources */,
 				50C7298B23B71F1900D5E0B4 /* TimelineWorker.swift in Sources */,
