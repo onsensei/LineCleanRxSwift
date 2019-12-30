@@ -62,7 +62,10 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
   //}
   
   func navigateToNewPost(source: TimelineViewController, destination: NewPostViewController) {
-    source.show(destination, sender: nil)
+    // present modal with nav bar & prevent swipe to dismiss & full screen
+    let navController = UINavigationController(rootViewController: destination)
+    navController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+    source.present(navController, animated: true, completion: nil)
   }
   
   // MARK: Passing data
