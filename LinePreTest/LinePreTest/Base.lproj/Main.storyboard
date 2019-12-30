@@ -76,10 +76,57 @@
                     <view key="view" contentMode="scaleToFill" id="X3q-zm-khN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="62A-5A-nzY">
+                                <rect key="frame" x="8" y="8" width="398" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="zKz-c7-g34"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5kH-0a-p3I" id="W1j-uf-fbM"/>
+                                </connections>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's on your mind." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVm-do-GR7">
+                                <rect key="frame" x="14" y="14" width="398" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="OOa-Xt-4ax"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" systemColor="placeholderTextColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="62A-5A-nzY" firstAttribute="top" secondItem="Tn6-wi-WpZ" secondAttribute="top" constant="8" id="4M4-Sr-JpX"/>
+                            <constraint firstItem="62A-5A-nzY" firstAttribute="leading" secondItem="Tn6-wi-WpZ" secondAttribute="leading" constant="8" id="DoW-qz-5EL"/>
+                            <constraint firstItem="AVm-do-GR7" firstAttribute="leading" secondItem="62A-5A-nzY" secondAttribute="leading" constant="6" id="Gcd-JV-mir"/>
+                            <constraint firstItem="AVm-do-GR7" firstAttribute="top" secondItem="62A-5A-nzY" secondAttribute="top" constant="6" id="HWU-0V-jgz"/>
+                            <constraint firstItem="AVm-do-GR7" firstAttribute="trailing" secondItem="62A-5A-nzY" secondAttribute="trailing" constant="6" id="c07-Lw-xMU"/>
+                            <constraint firstItem="Tn6-wi-WpZ" firstAttribute="trailing" secondItem="62A-5A-nzY" secondAttribute="trailing" constant="8" id="uEd-3I-ADY"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Tn6-wi-WpZ"/>
                     </view>
-                    <navigationItem key="navigationItem" id="KCs-0v-cUe"/>
+                    <navigationItem key="navigationItem" id="KCs-0v-cUe">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="blM-bJ-9eE">
+                            <connections>
+                                <action selector="onPressCloseButton:" destination="5kH-0a-p3I" id="Ixj-6T-wbx"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Create" id="jb4-YY-zOG">
+                            <connections>
+                                <action selector="onPressCreateButton:" destination="5kH-0a-p3I" id="6Yy-wZ-gBD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="placeholderLabel" destination="AVm-do-GR7" id="Xtc-At-p1Z"/>
+                        <outlet property="postTextView" destination="62A-5A-nzY" id="RId-t2-OKh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tTR-EY-bwJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

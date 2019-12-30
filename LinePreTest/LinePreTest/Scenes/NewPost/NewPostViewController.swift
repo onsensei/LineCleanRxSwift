@@ -17,7 +17,7 @@ protocol NewPostDisplayLogic: class
   func displaySomething(viewModel: NewPost.Something.ViewModel)
 }
 
-class NewPostViewController: UIViewController, NewPostDisplayLogic
+class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate
 {
   var interactor: NewPostBusinessLogic?
   var router: (NSObjectProtocol & NewPostRoutingLogic & NewPostDataPassing)?
@@ -69,12 +69,42 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    initLayout()
     doSomething()
+  }
+  
+  // MARK: IBOutlet
+  
+  @IBOutlet weak var postTextView: UITextView!
+  @IBOutlet weak var placeholderLabel: UILabel!
+  
+  // MARK: IBAction
+  
+  @IBAction func onPressCloseButton(_ sender: Any) {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  @IBAction func onPressCreateButton(_ sender: Any) {
+    let alert = UIAlertController(title: "New Post", message:"Create new post completed.", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+      self.dismiss(animated: true, completion: nil)
+    }))
+    self.present(alert, animated: true, completion: nil)
   }
   
   // MARK: Do something
   
-  //@IBOutlet weak var nameTextField: UITextField!
+  func initLayout()
+  {
+    title = "New Post"
+    
+    postTextView.layer.borderWidth = 1
+    postTextView.layer.borderColor = UIColor(red:60/255, green:60/255, blue:67/255, alpha: 0.3).cgColor
+    postTextView.layer.cornerRadius = 8
+    
+    let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+    view.addGestureRecognizer(tap)
+  }
   
   func doSomething()
   {
@@ -85,5 +115,31 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic
   func displaySomething(viewModel: NewPost.Something.ViewModel)
   {
     //nameTextField.text = viewModel.name
+  }
+  
+  // MARK: UITextViewDelegate
+  
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    if textView.text.count == 0 {
+      placeholderLabel.isHidden = false
+    } else {
+      placeholderLabel.isHidden = true
+    }
+  }
+  
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text.count == 0 {
+      placeholderLabel.isHidden = false
+    } else {
+      placeholderLabel.isHidden = true
+    }
+  }
+  
+  func textViewDidChange(_ textView: UITextView) {
+    if textView.text.count == 0 {
+      placeholderLabel.isHidden = false
+    } else {
+      placeholderLabel.isHidden = true
+    }
   }
 }
