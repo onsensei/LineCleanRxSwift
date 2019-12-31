@@ -17,7 +17,7 @@ protocol NewPostDisplayLogic: class
   func displaySomething(viewModel: NewPost.Something.ViewModel)
 }
 
-class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
   var interactor: NewPostBusinessLogic?
   var router: (NSObjectProtocol & NewPostRoutingLogic & NewPostDataPassing)?
@@ -96,6 +96,7 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   // MARK: Do something
   
+  let imagePicker = UIImagePickerController()
   var attachedPhotos:[UIImage] = []
   
   func initLayout()
@@ -120,6 +121,8 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
     let photoWidth = remainWidth / 3
     attachedPhotoHeightConstraint.constant = photoWidth
 //    self.view.updateConstraints()
+    
+    imagePicker.delegate = self
   }
   
   func doSomething()
@@ -191,6 +194,12 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     print(indexPath.row)
+    if indexPath.row == attachedPhotos.count {
+      // add cell
+      imagePicker.allowsEditing = false
+      imagePicker.sourceType = .photoLibrary
+      present(imagePicker, animated: true, completion: nil)
+    }
   }
   
   // MARK: UICollectionViewDelegateFlowLayout
@@ -207,5 +216,20 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 8
+  }
+  
+  // MARK: UIImagePickerControllerDelegate
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+      attachedPhotos.append(pickedImage)
+      attachedPhotoCollectionView.reloadData()
+    }
+    
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true, completion: nil)
   }
 }
