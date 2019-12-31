@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 protocol TimelineDisplayLogic: class
 {
@@ -87,6 +88,8 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   var newsFeedDatasource:[PostAlbum] = []
   
+  let hud = JGProgressHUD(style: .dark)
+  
   func initLayout()
   {
     title = "Timeline"
@@ -96,6 +99,9 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   func requestTimelineNewsFeed()
   {
+    hud.textLabel.text = "Loading"
+    hud.show(in: self.view)
+    
     let request = Timeline.NewsFeed.Request(token: "kIRtPjxyscyQoVCyBDfvIkUm1Sci7UW-a-zH")
     interactor?.fetchNewsFeed(request: request)
   }
@@ -106,6 +112,8 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   {
     newsFeedDatasource = viewModel.postAlbums
     newsfeedTableView.reloadData()
+    
+    hud.dismiss()
   }
   
   // MARK: UITableViewDataSource
