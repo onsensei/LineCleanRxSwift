@@ -91,11 +91,21 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   let hud = JGProgressHUD(style: .dark)
   
+  lazy var refreshControl: UIRefreshControl = {
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self,
+                             action:#selector(TimelineViewController.handleRefresh(_:)),
+                             for: UIControl.Event.valueChanged)
+    return refreshControl
+  }()
+  
   func initLayout()
   {
     title = "Timeline"
     
     newsfeedTableView.register(UINib(nibName: "TimelineTableViewCell", bundle: nil), forCellReuseIdentifier: "TimelineTableViewCell")
+    
+    newsfeedTableView.addSubview(self.refreshControl)
   }
   
   func requestTimelineNewsFeed()
@@ -105,6 +115,11 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     
     let request = Timeline.NewsFeed.Request(token: "kIRtPjxyscyQoVCyBDfvIkUm1Sci7UW-a-zH")
     interactor?.fetchNewsFeed(request: request)
+  }
+  
+  @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+    requestTimelineNewsFeed()
+    refreshControl.endRefreshing()
   }
   
   // MARK: TimelineDisplayLogic
