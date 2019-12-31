@@ -1,6 +1,11 @@
 PODS:
   - Alamofire (4.9.1)
+  - Cache (5.2.0)
+  - Imaginary (4.2.0):
+    - Cache (~> 5.0)
   - JGProgressHUD (2.1)
+  - Lightbox (2.3.0):
+    - Imaginary (~> 4.0)
   - Nantes (0.0.9)
   - SDWebImage (5.4.1):
     - SDWebImage/Core (= 5.4.1)
@@ -9,22 +14,29 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - JGProgressHUD
+  - Lightbox
   - Nantes
   - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Cache
+    - Imaginary
     - JGProgressHUD
+    - Lightbox
     - Nantes
     - SDWebImage
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  Lightbox: d317750e4132bfb871a5307cfe0a2c7d6a583c65
   Nantes: c1b4eec0748c01f4c6b83e16a11e52ab2007cd4d
   SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
 
-PODFILE CHECKSUM: 4ab05ce50c2b5a3c13ea1be520269a27efad5e8c
+PODFILE CHECKSUM: 24c77a4591f10001203da6aad9f05f5d893ccba8
 
 COCOAPODS: 1.5.3

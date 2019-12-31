@@ -9,6 +9,7 @@ target 'LinePreTest' do
   pod 'SDWebImage', '~> 5.0'
   pod 'JGProgressHUD'
   pod 'Nantes'
+  pod 'Lightbox'
 
   # Pods for LinePreTest
 
