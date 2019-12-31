@@ -8,6 +8,7 @@ target 'LinePreTest' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'SDWebImage', '~> 5.0'
   pod 'JGProgressHUD'
+  pod 'Nantes'
 
   # Pods for LinePreTest
 
