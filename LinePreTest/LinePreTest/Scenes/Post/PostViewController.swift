@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Lightbox
 
 protocol PostDisplayLogic: class
 {
@@ -78,6 +79,9 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
   //@IBOutlet weak var nameTextField: UITextField!
   
   @IBOutlet weak var postTableView: UITableView!
+  
+  var lightBoxVC:LightboxController?
+  
   func initLayout()
   {
     title = "Post"
@@ -113,8 +117,28 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
       // photo cell
       let item:PostPhoto = (interactor?.album.photos[indexPath.row - 1])!
       let cell = tableView.dequeueReusableCell(withIdentifier: "PostPhotoTableViewCell", for: indexPath) as! PostPhotoTableViewCell
-      cell.photoImageView.sd_setImage(with: URL(string: item.url), placeholderImage: UIImage(named: "placeholder"))
+      cell.photoImageView.sd_setImage(with: URL(string: item.thumbnail), placeholderImage: UIImage(named: "placeholder"))
       return cell
+    }
+  }
+  
+  // MARK: UITableViewDelegate
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    
+    if (indexPath.row > 0 && indexPath.row <= (interactor?.album.photos.count)!) {
+      // photo cell
+      var images:[LightboxImage] = []
+      for photo in (interactor?.album.photos)! {
+        let img: LightboxImage = LightboxImage(imageURL: URL(string: photo.url)!, text: photo.title, videoURL: nil)
+        images.append(img)
+      }
+      
+      lightBoxVC = LightboxController(images: images, startIndex: indexPath.row - 1)
+      lightBoxVC!.dynamicBackground = true
+      lightBoxVC!.modalPresentationStyle = .fullScreen
+      present(lightBoxVC!, animated: true, completion: nil)
     }
   }
 }
