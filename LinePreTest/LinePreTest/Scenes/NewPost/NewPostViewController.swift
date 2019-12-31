@@ -83,7 +83,14 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: IBAction
   
   @IBAction func onPressCloseButton(_ sender: Any) {
-    self.dismiss(animated: true, completion: nil)
+    let alert = UIAlertController(title: "Discard Post", message:"This post will be discard.", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+      //
+    }))
+    alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { (action: UIAlertAction!) in
+      self.dismiss(animated: true, completion: nil)
+    }))
+    self.present(alert, animated: true, completion: nil)
   }
   
   @IBAction func onPressCreateButton(_ sender: Any) {
