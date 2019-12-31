@@ -20,7 +20,7 @@ protocol TimelineDisplayLogic: class
 
 class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate
 {
-  var interactor: TimelineBusinessLogic?
+  var interactor: (TimelineBusinessLogic & TimelineDataStore)?
   var router: (NSObjectProtocol & TimelineRoutingLogic & TimelineDataPassing)?
   
   // MARK: Object lifecycle
@@ -140,6 +140,10 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     tableView.deselectRow(at: indexPath, animated: true)
     
     self.view.endEditing(true)
+    
+    let item:PostAlbum = filteredNewsFeedDatasource[indexPath.row]
+    interactor?.album = item
+    router?.routeToPost(segue: nil)
   }
   
   // MARK: UISearchBarDelegate

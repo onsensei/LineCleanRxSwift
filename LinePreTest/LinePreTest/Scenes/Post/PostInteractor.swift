@@ -19,14 +19,14 @@ protocol PostBusinessLogic
 
 protocol PostDataStore
 {
-  //var name: String { get set }
+  var album: PostAlbum { get set }
 }
 
 class PostInteractor: PostBusinessLogic, PostDataStore
 {
   var presenter: PostPresentationLogic?
   var worker: PostWorker?
-  //var name: String = ""
+  var album: PostAlbum = PostAlbum(title: "", photos: [])
   
   // MARK: Do something
   

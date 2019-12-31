@@ -17,9 +17,9 @@ protocol PostDisplayLogic: class
   func displaySomething(viewModel: Post.Something.ViewModel)
 }
 
-class PostViewController: UIViewController, PostDisplayLogic
+class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSource, UITableViewDelegate
 {
-  var interactor: PostBusinessLogic?
+  var interactor: (PostBusinessLogic & PostDataStore)?
   var router: (NSObjectProtocol & PostRoutingLogic & PostDataPassing)?
 
   // MARK: Object lifecycle
@@ -69,12 +69,22 @@ class PostViewController: UIViewController, PostDisplayLogic
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    initLayout()
     doSomething()
   }
   
   // MARK: Do something
   
   //@IBOutlet weak var nameTextField: UITextField!
+  
+  @IBOutlet weak var postTableView: UITableView!
+  func initLayout()
+  {
+    title = "Post"
+    
+    postTableView.register(UINib(nibName: "PostMessageTableViewCell", bundle: nil), forCellReuseIdentifier: "PostMessageTableViewCell")
+    postTableView.register(UINib(nibName: "PostPhotoTableViewCell", bundle: nil), forCellReuseIdentifier: "PostPhotoTableViewCell")
+  }
   
   func doSomething()
   {
@@ -85,5 +95,26 @@ class PostViewController: UIViewController, PostDisplayLogic
   func displaySomething(viewModel: Post.Something.ViewModel)
   {
     //nameTextField.text = viewModel.name
+  }
+  
+  // MARK: UITableViewDataSource
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return (interactor?.album.photos.count)! + 1
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    if (indexPath.row == 0) {
+      // message cell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "PostMessageTableViewCell", for: indexPath) as! PostMessageTableViewCell
+      cell.titleLabel.text = interactor?.album.title
+      return cell
+    } else {
+      // photo cell
+      let item:PostPhoto = (interactor?.album.photos[indexPath.row - 1])!
+      let cell = tableView.dequeueReusableCell(withIdentifier: "PostPhotoTableViewCell", for: indexPath) as! PostPhotoTableViewCell
+      cell.photoImageView.sd_setImage(with: URL(string: item.url), placeholderImage: UIImage(named: "placeholder"))
+      return cell
+    }
   }
 }

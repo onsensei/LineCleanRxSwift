@@ -20,16 +20,14 @@ protocol TimelineBusinessLogic
 
 protocol TimelineDataStore
 {
-  //!!!
-  //var name: String { get set }
+  var album: PostAlbum { get set }
 }
 
 class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
 {
   var presenter: TimelinePresentationLogic?
   var worker: TimelineWorker?
-  //!!!
-  //var name: String = ""
+  var album: PostAlbum = PostAlbum(title: "", photos: [])
   
   // MARK: Do something
   

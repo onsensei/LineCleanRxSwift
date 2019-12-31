@@ -165,14 +165,14 @@
         <!--Post View Controller-->
         <scene sceneID="H7Z-E7-QaL">
             <objects>
-                <viewController id="XMn-bw-Qav" customClass="PostViewController" customModule="LinePreTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostViewController" id="XMn-bw-Qav" customClass="PostViewController" customModule="LinePreTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h9s-3Y-HbS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z3y-Wh-VV1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z3y-Wh-VV1">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="XMn-bw-Qav" id="kLz-fF-gIb"/>
                                     <outlet property="delegate" destination="XMn-bw-Qav" id="8O0-kC-X5T"/>
@@ -189,6 +189,9 @@
                         <viewLayoutGuide key="safeArea" id="44a-4j-5fE"/>
                     </view>
                     <navigationItem key="navigationItem" id="wIg-jX-VMe"/>
+                    <connections>
+                        <outlet property="postTableView" destination="Z3y-Wh-VV1" id="ngc-R2-YYT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aFu-4F-vwa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

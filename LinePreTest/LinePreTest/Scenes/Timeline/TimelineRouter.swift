@@ -15,6 +15,7 @@ import UIKit
 @objc protocol TimelineRoutingLogic
 {
   func routeToNewPost(segue: UIStoryboardSegue?)
+  func routeToPost(segue: UIStoryboardSegue?)
 }
 
 protocol TimelineDataPassing
@@ -36,6 +37,20 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
       let storyboard = UIStoryboard(name: "Main", bundle: nil)
       let destinationVC = storyboard.instantiateViewController(withIdentifier: "NewPostViewController") as! NewPostViewController
       navigateToNewPost(source: viewController!, destination: destinationVC)
+    }
+  }
+  
+  func routeToPost(segue: UIStoryboardSegue?) {
+    if let segue = segue {
+      let destinationVC = segue.destination as! PostViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToPost(source: dataStore!, destination: &destinationDS)
+    } else {
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let destinationVC = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToPost(source: dataStore!, destination: &destinationDS)
+      navigateToPost(source: viewController!, destination: destinationVC)
     }
   }
   
@@ -68,10 +83,20 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
     source.present(navController, animated: true, completion: nil)
   }
   
+  func navigateToPost(source: TimelineViewController, destination: PostViewController) {
+    // present modal with nav bar & prevent swipe to dismiss & full screen
+    source.show(destination, sender: nil)
+  }
+  
   // MARK: Passing data
   
   //func passDataToSomewhere(source: TimelineDataStore, destination: inout SomewhereDataStore)
   //{
   //  destination.name = source.name
   //}
+  
+  func passDataToPost(source: TimelineDataStore, destination: inout PostDataStore)
+  {
+    destination.album = source.album
+  }
 }
