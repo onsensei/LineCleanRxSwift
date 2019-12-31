@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Nantes
 
 class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   @IBOutlet weak var titleLabel: UILabel!
@@ -19,12 +20,43 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   
   @IBOutlet weak var separatorViewHeightConstraint: NSLayoutConstraint!
   
+  
+  let label: NantesLabel = .init(frame: .zero)
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
     photoCollectionView.dataSource = self
     photoCollectionView.delegate = self
     photoCollectionView.register(UINib(nibName: "PostPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "PostPhotoCollectionViewCell")
+    
+    let myAttributeSSS:NSMutableAttributedString = NSMutableAttributedString(string: "… See More")
+    myAttributeSSS.addAttributes(
+      [
+        NSAttributedString.Key.foregroundColor: UIColor.label,
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0)
+      ], range: NSRange(location: 0, length: 1)
+    )
+    myAttributeSSS.addAttributes(
+      [
+        NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0)
+      ], range: NSRange(location: 1, length: 9)
+    )
+    label.attributedTruncationToken = myAttributeSSS // NSAttributedString(string: "... See More", attributes: myAttribute)
+    label.numberOfLines = 4
+    label.textColor = UIColor.label
+    self.contentView.addSubview(label)
+    
+    label.translatesAutoresizingMaskIntoConstraints = false
+    let labelLeadingConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 8)
+    let labelTrailingConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -8)
+    let labelTopConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 8)
+    let labelBottomConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: photoCollectionView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: -8)
+    NSLayoutConstraint.activate([labelLeadingConstraint, labelTrailingConstraint, labelTopConstraint, labelBottomConstraint])
+    
+//    titleLabel.attributedTruncationToken = NSAttributedString(string: "... See More")
+//    titleLabel.numberOfLines = 4
   }
 
   override func setSelected(_ selected: Bool, animated: Bool) {
@@ -43,9 +75,10 @@ class TimelineTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
   {
     datasource = postAlbum
     
-    titleLabel.text = datasource.title
-    titleLabel.text = "\(datasource.title) (\(datasource.photos.count))" // !!!
+//    titleLabel.text = datasource.title
+//    titleLabel.text = "\(datasource.title) \(datasource.title) \(datasource.title) \(datasource.title) \(datasource.title) (\(datasource.photos.count))" // !!!
     
+    label.text = "\(datasource.title) \(datasource.title) \(datasource.title) \(datasource.title) \(datasource.title) (\(datasource.photos.count))" // !!!
     if (datasource.photos.count == 0) {
       photoZeroHeightConstraint.isActive = true
       photoSquareRatioConstraint.isActive = false
