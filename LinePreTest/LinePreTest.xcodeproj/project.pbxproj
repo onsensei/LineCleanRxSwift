@@ -32,6 +32,10 @@
 		50FB95E823B8E0E8005A612C /* NewPostModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E223B8E0E8005A612C /* NewPostModels.swift */; };
 		50FB95E923B8E0E8005A612C /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E323B8E0E8005A612C /* NewPostViewController.swift */; };
 		50FB95EA23B8E0E8005A612C /* NewPostInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95E423B8E0E8005A612C /* NewPostInteractor.swift */; };
+		50FB95ED23BA755D005A612C /* AddPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95EB23BA755D005A612C /* AddPhotoCollectionViewCell.swift */; };
+		50FB95EE23BA755D005A612C /* AddPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB95EC23BA755D005A612C /* AddPhotoCollectionViewCell.xib */; };
+		50FB95F123BAF089005A612C /* DummyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB95EF23BAF089005A612C /* DummyCollectionViewCell.swift */; };
+		50FB95F223BAF089005A612C /* DummyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB95F023BAF089005A612C /* DummyCollectionViewCell.xib */; };
 		92B68CABF98638134063938A /* Pods_LinePreTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */; };
 		CACEEE350D4CAFFF64C077C2 /* Pods_LinePreTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6E7ADF731AB4DC09E5F53B /* Pods_LinePreTest.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +93,10 @@
 		50FB95E223B8E0E8005A612C /* NewPostModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostModels.swift; sourceTree = "<group>"; };
 		50FB95E323B8E0E8005A612C /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		50FB95E423B8E0E8005A612C /* NewPostInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostInteractor.swift; sourceTree = "<group>"; };
+		50FB95EB23BA755D005A612C /* AddPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		50FB95EC23BA755D005A612C /* AddPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
+		50FB95EF23BAF089005A612C /* DummyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCollectionViewCell.swift; sourceTree = "<group>"; };
+		50FB95F023BAF089005A612C /* DummyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DummyCollectionViewCell.xib; sourceTree = "<group>"; };
 		7BBCEA9A74A937ACEC69D679 /* Pods_LinePreTestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinePreTestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75465BBF72CF4E97DB07F24 /* Pods-LinePreTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestTests/Pods-LinePreTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6939F0ED9CAFAA40EAB5C32 /* Pods-LinePreTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTest/Pods-LinePreTest.debug.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +238,10 @@
 				506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */,
 				50C7299323B7265500D5E0B4 /* TimelineTableViewCell.swift */,
 				50C7299423B7265500D5E0B4 /* TimelineTableViewCell.xib */,
+				50FB95EB23BA755D005A612C /* AddPhotoCollectionViewCell.swift */,
+				50FB95EC23BA755D005A612C /* AddPhotoCollectionViewCell.xib */,
+				50FB95EF23BAF089005A612C /* DummyCollectionViewCell.swift */,
+				50FB95F023BAF089005A612C /* DummyCollectionViewCell.xib */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -369,7 +381,9 @@
 				50C7299623B7265500D5E0B4 /* TimelineTableViewCell.xib in Resources */,
 				50C7295D23B71D3E00D5E0B4 /* LaunchScreen.storyboard in Resources */,
 				50C7295A23B71D3E00D5E0B4 /* Assets.xcassets in Resources */,
+				50FB95EE23BA755D005A612C /* AddPhotoCollectionViewCell.xib in Resources */,
 				506B76B023B8A54700433AD0 /* PostPhotoCollectionViewCell.xib in Resources */,
+				50FB95F223BAF089005A612C /* DummyCollectionViewCell.xib in Resources */,
 				50C7295823B71D3B00D5E0B4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +506,7 @@
 			files = (
 				50C7295523B71D3B00D5E0B4 /* ViewController.swift in Sources */,
 				50FB95EA23B8E0E8005A612C /* NewPostInteractor.swift in Sources */,
+				50FB95ED23BA755D005A612C /* AddPhotoCollectionViewCell.swift in Sources */,
 				50C7298D23B71F1900D5E0B4 /* TimelineModels.swift in Sources */,
 				50C7299523B7265500D5E0B4 /* TimelineTableViewCell.swift in Sources */,
 				50C7298A23B71F1900D5E0B4 /* TimelinePresenter.swift in Sources */,
@@ -503,6 +518,7 @@
 				50FB95E823B8E0E8005A612C /* NewPostModels.swift in Sources */,
 				50C7298C23B71F1900D5E0B4 /* TimelineRouter.swift in Sources */,
 				50FB95E623B8E0E8005A612C /* NewPostWorker.swift in Sources */,
+				50FB95F123BAF089005A612C /* DummyCollectionViewCell.swift in Sources */,
 				50C7298E23B71F1900D5E0B4 /* TimelineViewController.swift in Sources */,
 				50C7298B23B71F1900D5E0B4 /* TimelineWorker.swift in Sources */,
 				50C7298F23B71F1900D5E0B4 /* TimelineInteractor.swift in Sources */,
@@ -681,6 +697,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -699,6 +716,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
