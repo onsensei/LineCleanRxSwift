@@ -213,9 +213,28 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
       self.present(alert, animated: true, completion: nil)
     } else if indexPath.row == attachedPhotos.count {
       // add cell
-      imagePicker.allowsEditing = false
-      imagePicker.sourceType = .photoLibrary
-      present(imagePicker, animated: true, completion: nil)
+      let alert = UIAlertController(title: "Add Photo", message:"Please choose photo source.", preferredStyle: UIAlertController.Style.actionSheet)
+      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        //
+      }))
+      
+      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+        alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction!) in
+          self.imagePicker.allowsEditing = false
+          self.imagePicker.sourceType = .photoLibrary
+          self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+      }
+      
+      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction!) in
+          self.imagePicker.allowsEditing = false
+          self.imagePicker.sourceType = .camera
+          self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+      }
+      
+      self.present(alert, animated: true, completion: nil)
     }
   }
   
