@@ -193,8 +193,18 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: UICollectionViewDelegate
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    print(indexPath.row)
-    if indexPath.row == attachedPhotos.count {
+    if indexPath.row < attachedPhotos.count {
+      // photo cell
+      let alert = UIAlertController(title: "Remove Photo", message:"This photo will be remove.", preferredStyle: UIAlertController.Style.alert)
+      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        //
+      }))
+      alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { (action: UIAlertAction!) in
+        self.attachedPhotos.remove(at: indexPath.row)
+        self.attachedPhotoCollectionView.reloadData()
+      }))
+      self.present(alert, animated: true, completion: nil)
+    } else if indexPath.row == attachedPhotos.count {
       // add cell
       imagePicker.allowsEditing = false
       imagePicker.sourceType = .photoLibrary
