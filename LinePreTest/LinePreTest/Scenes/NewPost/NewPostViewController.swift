@@ -17,7 +17,7 @@ protocol NewPostDisplayLogic: class
   func displaySomething(viewModel: NewPost.Something.ViewModel)
 }
 
-class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate
+class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
   var interactor: NewPostBusinessLogic?
   var router: (NSObjectProtocol & NewPostRoutingLogic & NewPostDataPassing)?
@@ -77,6 +77,8 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   @IBOutlet weak var postTextView: UITextView!
   @IBOutlet weak var placeholderLabel: UILabel!
+  @IBOutlet weak var attachedPhotoCollectionView: UICollectionView!
+  @IBOutlet weak var attachedPhotoHeightConstraint: NSLayoutConstraint!
   
   // MARK: IBAction
   
@@ -94,6 +96,8 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   // MARK: Do something
   
+  var attachedPhotos:[UIImage] = []
+  
   func initLayout()
   {
     title = "New Post"
@@ -103,7 +107,19 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
     postTextView.layer.cornerRadius = 8
     
     let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+    tap.cancelsTouchesInView = false
     view.addGestureRecognizer(tap)
+    
+    attachedPhotoCollectionView.dataSource = self
+    attachedPhotoCollectionView.delegate = self
+    attachedPhotoCollectionView.register(UINib(nibName: "PostPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "PostPhotoCollectionViewCell")
+    attachedPhotoCollectionView.register(UINib(nibName: "AddPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "AddPhotoCollectionViewCell")
+    attachedPhotoCollectionView.register(UINib(nibName: "DummyCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "DummyCollectionViewCell")
+    
+    let remainWidth = self.view.frame.width - (8 * 4)
+    let photoWidth = remainWidth / 3
+    attachedPhotoHeightConstraint.constant = photoWidth
+//    self.view.updateConstraints()
   }
   
   func doSomething()
@@ -141,5 +157,55 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
     } else {
       placeholderLabel.isHidden = true
     }
+  }
+  
+  // MARK: UICollectionViewDataSource
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 3
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    if indexPath.row < attachedPhotos.count {
+      // photo cell
+      let cell:PostPhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostPhotoCollectionViewCell", for: indexPath as IndexPath) as! PostPhotoCollectionViewCell
+      
+      let item:UIImage = attachedPhotos[indexPath.row]
+      cell.photoImageView.image = item
+      
+      return cell
+    } else if indexPath.row == attachedPhotos.count {
+      // add cell
+      let cell:AddPhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPhotoCollectionViewCell", for: indexPath as IndexPath) as! AddPhotoCollectionViewCell
+      
+      return cell
+    } else {
+      // dummy cell
+      let cell:DummyCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "DummyCollectionViewCell", for: indexPath as IndexPath) as! DummyCollectionViewCell
+      
+      return cell
+    }
+  }
+  
+  // MARK: UICollectionViewDelegate
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    print(indexPath.row)
+  }
+  
+  // MARK: UICollectionViewDelegateFlowLayout
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let remainWidth = self.view.frame.width - (8 * 4)
+    let photoWidth = remainWidth / 3
+    return CGSize(width: photoWidth, height: photoWidth)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 8
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 8
   }
 }

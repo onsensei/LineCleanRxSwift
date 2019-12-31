@@ -9,10 +9,10 @@
 import UIKit
 
 class AddPhotoCollectionViewCell: UICollectionViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    // Initialization code
+    self.layer.borderWidth = 1
+    self.layer.borderColor = UIColor.systemBlue.cgColor
+  }
 }
