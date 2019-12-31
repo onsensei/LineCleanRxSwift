@@ -64,6 +64,7 @@
                     <connections>
                         <outlet property="newsfeedTableView" destination="gOS-7O-TfU" id="qDX-8r-ivM"/>
                         <segue destination="5kH-0a-p3I" kind="presentation" identifier="NewPost" id="9kH-g8-8jX"/>
+                        <segue destination="XMn-bw-Qav" kind="show" identifier="Post" id="lGN-s1-ESM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -159,7 +160,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tTR-EY-bwJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1978" y="139"/>
+            <point key="canvasLocation" x="1990" y="-585"/>
+        </scene>
+        <!--Post View Controller-->
+        <scene sceneID="H7Z-E7-QaL">
+            <objects>
+                <viewController id="XMn-bw-Qav" customClass="PostViewController" customModule="LinePreTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="h9s-3Y-HbS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z3y-Wh-VV1">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="XMn-bw-Qav" id="kLz-fF-gIb"/>
+                                    <outlet property="delegate" destination="XMn-bw-Qav" id="8O0-kC-X5T"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Z3y-Wh-VV1" firstAttribute="top" secondItem="44a-4j-5fE" secondAttribute="top" id="B2y-n6-vFI"/>
+                            <constraint firstItem="44a-4j-5fE" firstAttribute="trailing" secondItem="Z3y-Wh-VV1" secondAttribute="trailing" id="fVo-Je-DI8"/>
+                            <constraint firstItem="Z3y-Wh-VV1" firstAttribute="leading" secondItem="44a-4j-5fE" secondAttribute="leading" id="gDK-QM-0Rc"/>
+                            <constraint firstItem="44a-4j-5fE" firstAttribute="bottom" secondItem="Z3y-Wh-VV1" secondAttribute="bottom" id="x5X-2g-ya1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="44a-4j-5fE"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wIg-jX-VMe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aFu-4F-vwa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1990" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TwB-MP-u0h">
