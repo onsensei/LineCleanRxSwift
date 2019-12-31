@@ -87,6 +87,7 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   // MARK: Do something
   
   var newsFeedDatasource:[PostAlbum] = []
+  var filteredNewsFeedDatasource:[PostAlbum] = []
   
   let hud = JGProgressHUD(style: .dark)
   
@@ -111,6 +112,8 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
   {
     newsFeedDatasource = viewModel.postAlbums
+    filteredNewsFeedDatasource = viewModel.postAlbums
+    
     newsfeedTableView.reloadData()
     
     hud.dismiss()
@@ -119,13 +122,13 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   // MARK: UITableViewDataSource
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return newsFeedDatasource.count
+    return filteredNewsFeedDatasource.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
-    let item:PostAlbum = newsFeedDatasource[indexPath.row]
+    let item:PostAlbum = filteredNewsFeedDatasource[indexPath.row]
     cell.displayCell(postAlbum: item)
 
     return cell
@@ -135,5 +138,25 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    
+    self.view.endEditing(true)
+  }
+  
+  // MARK: UISearchBarDelegate
+  
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    if searchText.count > 0 {
+      filteredNewsFeedDatasource = newsFeedDatasource.filter { (album) -> Bool in
+        return album.title.lowercased().contains(searchText.lowercased())
+      }
+    } else {
+      filteredNewsFeedDatasource = newsFeedDatasource
+    }
+    
+    newsfeedTableView.reloadData()
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    self.view.endEditing(true)
   }
 }
