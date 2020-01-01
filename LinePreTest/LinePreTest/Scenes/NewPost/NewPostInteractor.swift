@@ -14,6 +14,13 @@ import UIKit
 
 protocol NewPostBusinessLogic
 {
+  func requestAlertDiscardNewPost(request: NewPost.AlertDiscardNewPost.Request)
+  func requestDiscardNewPost(request: NewPost.DiscardNewPost.Request)
+  
+  func requestAlertCreateNewPost(request: NewPost.AlertCreateNewPost.Request)
+  
+  func requestTextViewPlaceholder(request: NewPost.TextViewPlaceholder.Request)
+  
   func requestAlertAddPhoto(request: NewPost.AlertAddPhoto.Request)
   func requestPickPhoto(request: NewPost.PickPhoto.Request)
   func requestAddPhoto(request: NewPost.AddPhoto.Request)
@@ -35,6 +42,26 @@ class NewPostInteractor: NewPostBusinessLogic, NewPostDataStore
   var attachedPhotos: [UIImage] = []
   
   // MARK: Do something
+  
+  func requestAlertDiscardNewPost(request: NewPost.AlertDiscardNewPost.Request) {
+    let response = NewPost.AlertDiscardNewPost.Response()
+    presenter!.presentAlertDiscardNewPost(response: response)
+  }
+  
+  func requestDiscardNewPost(request: NewPost.DiscardNewPost.Request) {
+    let response = NewPost.DiscardNewPost.Response()
+    presenter!.presentDiscardNewPost(response: response)
+  }
+  
+  func requestAlertCreateNewPost(request: NewPost.AlertCreateNewPost.Request) {
+    let response = NewPost.AlertCreateNewPost.Response()
+    presenter!.presentAlertCreateNewPost(response: response)
+  }
+  
+  func requestTextViewPlaceholder(request: NewPost.TextViewPlaceholder.Request) {
+    let response = NewPost.TextViewPlaceholder.Response(textCount: request.text.count)
+    presenter!.presentTextViewPlaceholder(response: response)
+  }
   
   func requestAlertAddPhoto(request: NewPost.AlertAddPhoto.Request) {
     let response = NewPost.AlertAddPhoto.Response()

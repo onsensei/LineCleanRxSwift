@@ -16,6 +16,61 @@ enum NewPost
 {
   // MARK: Use cases
   
+  enum AlertDiscardNewPost
+  {
+    struct Request
+    {
+    }
+    struct Response
+    {
+    }
+    struct ViewModel
+    {
+    }
+  }
+  
+  enum DiscardNewPost
+  {
+    struct Request
+    {
+    }
+    struct Response
+    {
+    }
+    struct ViewModel
+    {
+    }
+  }
+  
+  enum AlertCreateNewPost
+  {
+    struct Request
+    {
+    }
+    struct Response
+    {
+    }
+    struct ViewModel
+    {
+    }
+  }
+  
+  enum TextViewPlaceholder
+  {
+    struct Request
+    {
+      var text: String
+    }
+    struct Response
+    {
+      var textCount: Int
+    }
+    struct ViewModel
+    {
+      var isHidden: Bool
+    }
+  }
+  
   enum AlertAddPhoto
   {
     struct Request

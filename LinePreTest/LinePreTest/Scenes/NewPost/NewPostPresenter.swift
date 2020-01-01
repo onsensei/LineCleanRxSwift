@@ -14,6 +14,13 @@ import UIKit
 
 protocol NewPostPresentationLogic
 {
+  func presentAlertDiscardNewPost(response: NewPost.AlertDiscardNewPost.Response)
+  func presentDiscardNewPost(response: NewPost.DiscardNewPost.Response)
+  
+  func presentAlertCreateNewPost(response: NewPost.AlertCreateNewPost.Response)
+  
+  func presentTextViewPlaceholder(response: NewPost.TextViewPlaceholder.Response)
+  
   func presentAlertAddPhoto(response: NewPost.AlertAddPhoto.Response)
   func presentPickPhoto(response: NewPost.PickPhoto.Response)
   func presentAddPhoto(response: NewPost.AddPhoto.Response)
@@ -27,6 +34,28 @@ class NewPostPresenter: NewPostPresentationLogic
   weak var viewController: NewPostDisplayLogic?
   
   // MARK: Do something
+  
+  func presentAlertDiscardNewPost(response: NewPost.AlertDiscardNewPost.Response) {
+    let viewModel = NewPost.AlertDiscardNewPost.ViewModel()
+    viewController?.displayAlertDiscardNewPost(viewModel: viewModel)
+  }
+  
+  func presentDiscardNewPost(response: NewPost.DiscardNewPost.Response) {
+    let viewModel = NewPost.DiscardNewPost.ViewModel()
+    viewController?.displayDiscardNewPost(viewModel: viewModel)
+  }
+  
+  func presentAlertCreateNewPost(response: NewPost.AlertCreateNewPost.Response) {
+    let viewModel = NewPost.AlertCreateNewPost.ViewModel()
+    viewController?.displayAlertCreateNewPost(viewModel: viewModel)
+  }
+  
+  func presentTextViewPlaceholder(response: NewPost.TextViewPlaceholder.Response) {
+    let isEmpty:Bool = response.textCount == 0
+    
+    let viewModel = NewPost.TextViewPlaceholder.ViewModel(isHidden: !isEmpty)
+    viewController?.displayTextViewPlaceholder(viewModel: viewModel)
+  }
   
   func presentAlertAddPhoto(response: NewPost.AlertAddPhoto.Response) {
     let viewModel = NewPost.AlertAddPhoto.ViewModel()

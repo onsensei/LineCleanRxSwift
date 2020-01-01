@@ -14,6 +14,13 @@ import UIKit
 
 protocol NewPostDisplayLogic: class
 {
+  func displayAlertDiscardNewPost(viewModel: NewPost.AlertDiscardNewPost.ViewModel)
+  func displayDiscardNewPost(viewModel: NewPost.DiscardNewPost.ViewModel)
+  
+  func displayAlertCreateNewPost(viewModel: NewPost.AlertCreateNewPost.ViewModel)
+  
+  func displayTextViewPlaceholder(viewModel: NewPost.TextViewPlaceholder.ViewModel)
+  
   func displayAlertAddPhoto(viewModel: NewPost.AlertAddPhoto.ViewModel)
   func displayPickPhoto(viewModel: NewPost.PickPhoto.ViewModel)
   func displayAddPhoto(viewModel: NewPost.AddPhoto.ViewModel)
@@ -87,22 +94,11 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: IBAction
   
   @IBAction func onPressCloseButton(_ sender: Any) {
-    let alert = UIAlertController(title: "Discard Post", message:"This post will be discard.", preferredStyle: UIAlertController.Style.alert)
-    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-      //
-    }))
-    alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { (action: UIAlertAction!) in
-      self.dismiss(animated: true, completion: nil)
-    }))
-    self.present(alert, animated: true, completion: nil)
+    requestAlertDiscardNewPost()
   }
   
   @IBAction func onPressCreateButton(_ sender: Any) {
-    let alert = UIAlertController(title: "New Post", message:"Create new post completed.", preferredStyle: UIAlertController.Style.alert)
-    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
-      self.dismiss(animated: true, completion: nil)
-    }))
-    self.present(alert, animated: true, completion: nil)
+    requestAlertCreateNewPost()
   }
   
   // MARK: Do something
@@ -149,6 +145,26 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
     return photoWidth
   }
   
+  func requestAlertDiscardNewPost() {
+    let request = NewPost.AlertDiscardNewPost.Request()
+    interactor!.requestAlertDiscardNewPost(request: request)
+  }
+  
+  func requestDiscardNewPost() {
+    let request = NewPost.DiscardNewPost.Request()
+    interactor!.requestDiscardNewPost(request: request)
+  }
+  
+  func requestAlertCreateNewPost() {
+    let request = NewPost.AlertCreateNewPost.Request()
+    interactor!.requestAlertCreateNewPost(request: request)
+  }
+  
+  func requestTextViewPlaceholder(text: String) {
+    let request = NewPost.TextViewPlaceholder.Request(text: text)
+    interactor!.requestTextViewPlaceholder(request: request)
+  }
+  
   func requestAlertAddPhoto() {
     let request = NewPost.AlertAddPhoto.Request()
     interactor!.requestAlertAddPhoto(request: request)
@@ -177,6 +193,31 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   }
   
   // MARK: NewPostDisplayLogic
+  
+  func displayAlertDiscardNewPost(viewModel: NewPost.AlertDiscardNewPost.ViewModel) {
+    let alert = UIAlertController(title: "Discard Post", message:"This post will be discard.", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { (action: UIAlertAction!) in
+      self.requestDiscardNewPost()
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  func displayDiscardNewPost(viewModel: NewPost.DiscardNewPost.ViewModel) {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  func displayAlertCreateNewPost(viewModel: NewPost.AlertCreateNewPost.ViewModel) {
+    let alert = UIAlertController(title: "New Post", message:"Create new post completed.", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+      self.dismiss(animated: true, completion: nil)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  func displayTextViewPlaceholder(viewModel: NewPost.TextViewPlaceholder.ViewModel) {
+    placeholderLabel.isHidden = viewModel.isHidden
+  }
   
   func displayAlertAddPhoto(viewModel: NewPost.AlertAddPhoto.ViewModel) {
     let alert = UIAlertController(title: "Add Photo", message:"Please choose photo source.", preferredStyle: UIAlertController.Style.actionSheet)
@@ -225,27 +266,15 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: UITextViewDelegate
   
   func textViewDidBeginEditing(_ textView: UITextView) {
-    if textView.text.count == 0 {
-      placeholderLabel.isHidden = false
-    } else {
-      placeholderLabel.isHidden = true
-    }
+    requestTextViewPlaceholder(text: textView.text)
   }
   
   func textViewDidEndEditing(_ textView: UITextView) {
-    if textView.text.count == 0 {
-      placeholderLabel.isHidden = false
-    } else {
-      placeholderLabel.isHidden = true
-    }
+    requestTextViewPlaceholder(text: textView.text)
   }
   
   func textViewDidChange(_ textView: UITextView) {
-    if textView.text.count == 0 {
-      placeholderLabel.isHidden = false
-    } else {
-      placeholderLabel.isHidden = true
-    }
+    requestTextViewPlaceholder(text: textView.text)
   }
   
   // MARK: UICollectionViewDataSource
