@@ -10,10 +10,21 @@ import UIKit
 
 class PostPhotoCollectionViewCell: UICollectionViewCell {
 
+  // MARK: IBOutlet
+  
   @IBOutlet weak var photoImageView: UIImageView!
+  
+  // MARK: Cell lifecycle
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    
     // Initialization code
+  }
+  
+  // MARK: Do something
+  
+  func displayCell(image: UIImage) {
+    photoImageView.image = image
   }
 }

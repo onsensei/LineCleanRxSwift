@@ -14,7 +14,12 @@ import UIKit
 
 protocol NewPostPresentationLogic
 {
-  func presentSomething(response: NewPost.Something.Response)
+  func presentAlertAddPhoto(response: NewPost.AlertAddPhoto.Response)
+  func presentPickPhoto(response: NewPost.PickPhoto.Response)
+  func presentAddPhoto(response: NewPost.AddPhoto.Response)
+  
+  func presentAlertRemovePhoto(response: NewPost.AlertRemovePhoto.Response)
+  func presentRemovePhoto(response: NewPost.RemovePhoto.Response)
 }
 
 class NewPostPresenter: NewPostPresentationLogic
@@ -23,9 +28,30 @@ class NewPostPresenter: NewPostPresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: NewPost.Something.Response)
+  func presentAlertAddPhoto(response: NewPost.AlertAddPhoto.Response) {
+    let viewModel = NewPost.AlertAddPhoto.ViewModel()
+    viewController?.displayAlertAddPhoto(viewModel: viewModel)
+  }
+  
+  func presentPickPhoto(response: NewPost.PickPhoto.Response) {
+    let viewModel = NewPost.PickPhoto.ViewModel(imageSourceType: response.imageSourceType)
+    viewController?.displayPickPhoto(viewModel: viewModel)
+  }
+  
+  func presentAddPhoto(response: NewPost.AddPhoto.Response) {
+    let viewModel = NewPost.AddPhoto.ViewModel()
+    viewController?.displayAddPhoto(viewModel: viewModel)
+  }
+  
+  func presentAlertRemovePhoto(response: NewPost.AlertRemovePhoto.Response)
   {
-    let viewModel = NewPost.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+    let viewModel = NewPost.AlertRemovePhoto.ViewModel(photoIndex: response.photoIndex)
+    viewController?.displayAlertRemovePhoto(viewModel: viewModel)
+  }
+  
+  func presentRemovePhoto(response: NewPost.RemovePhoto.Response)
+  {
+    let viewModel = NewPost.RemovePhoto.ViewModel()
+    viewController?.displayRemovePhoto(viewModel: viewModel)
   }
 }

@@ -9,8 +9,12 @@
 import UIKit
 
 class DummyCollectionViewCell: UICollectionViewCell {
+  
+  // MARK: Cell lifecycle
+  
   override func awakeFromNib() {
     super.awakeFromNib()
+    
     // Initialization code
   }
 }

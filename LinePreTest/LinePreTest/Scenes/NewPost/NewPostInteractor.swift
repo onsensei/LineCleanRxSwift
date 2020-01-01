@@ -14,28 +14,54 @@ import UIKit
 
 protocol NewPostBusinessLogic
 {
-  func doSomething(request: NewPost.Something.Request)
+  func requestAlertAddPhoto(request: NewPost.AlertAddPhoto.Request)
+  func requestPickPhoto(request: NewPost.PickPhoto.Request)
+  func requestAddPhoto(request: NewPost.AddPhoto.Request)
+  
+  func requestAlertRemovePhoto(request: NewPost.AlertRemovePhoto.Request)
+  func requestRemovePhoto(request: NewPost.RemovePhoto.Request)
 }
 
 protocol NewPostDataStore
 {
-  //var name: String { get set }
+  var attachedPhotos: [UIImage] { get set }
 }
 
 class NewPostInteractor: NewPostBusinessLogic, NewPostDataStore
 {
   var presenter: NewPostPresentationLogic?
   var worker: NewPostWorker?
-  //var name: String = ""
+  
+  var attachedPhotos: [UIImage] = []
   
   // MARK: Do something
   
-  func doSomething(request: NewPost.Something.Request)
-  {
-    worker = NewPostWorker()
-    worker?.doSomeWork()
+  func requestAlertAddPhoto(request: NewPost.AlertAddPhoto.Request) {
+    let response = NewPost.AlertAddPhoto.Response()
+    presenter!.presentAlertAddPhoto(response: response)
+  }
+  
+  func requestPickPhoto(request: NewPost.PickPhoto.Request) {
+    let response = NewPost.PickPhoto.Response(imageSourceType: request.imageSourceType)
+    presenter!.presentPickPhoto(response: response)
+  }
+  
+  func requestAddPhoto(request: NewPost.AddPhoto.Request) {
+    attachedPhotos.append(request.selectedImage)
     
-    let response = NewPost.Something.Response()
-    presenter?.presentSomething(response: response)
+    let response = NewPost.AddPhoto.Response()
+    presenter!.presentAddPhoto(response: response)
+  }
+  
+  func requestAlertRemovePhoto(request: NewPost.AlertRemovePhoto.Request) {
+    let response = NewPost.AlertRemovePhoto.Response(photoIndex: request.photoIndex)
+    presenter!.presentAlertRemovePhoto(response: response)
+  }
+  
+  func requestRemovePhoto(request: NewPost.RemovePhoto.Request) {
+    attachedPhotos.remove(at: request.photoIndex)
+    
+    let response = NewPost.RemovePhoto.Response()
+    presenter!.presentRemovePhoto(response: response)
   }
 }

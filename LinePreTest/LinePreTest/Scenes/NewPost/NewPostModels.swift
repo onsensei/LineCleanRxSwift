@@ -16,10 +16,70 @@ enum NewPost
 {
   // MARK: Use cases
   
-  enum Something
+  enum AlertAddPhoto
   {
     struct Request
     {
+    }
+    struct Response
+    {
+    }
+    struct ViewModel
+    {
+    }
+  }
+  
+  enum PickPhoto
+  {
+    struct Request
+    {
+      var imageSourceType: UIImagePickerController.SourceType
+    }
+    struct Response
+    {
+      var imageSourceType: UIImagePickerController.SourceType
+    }
+    struct ViewModel
+    {
+      var imageSourceType: UIImagePickerController.SourceType
+    }
+  }
+  
+  enum AddPhoto
+  {
+    struct Request
+    {
+      var selectedImage: UIImage
+    }
+    struct Response
+    {
+    }
+    struct ViewModel
+    {
+    }
+  }
+  
+  enum AlertRemovePhoto
+  {
+    struct Request
+    {
+      var photoIndex: Int
+    }
+    struct Response
+    {
+      var photoIndex: Int
+    }
+    struct ViewModel
+    {
+      var photoIndex: Int
+    }
+  }
+  
+  enum RemovePhoto
+  {
+    struct Request
+    {
+      var photoIndex: Int
     }
     struct Response
     {

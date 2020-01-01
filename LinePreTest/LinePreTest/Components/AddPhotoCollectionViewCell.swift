@@ -9,8 +9,12 @@
 import UIKit
 
 class AddPhotoCollectionViewCell: UICollectionViewCell {
+  
+  // MARK: Cell lifecycle
+  
   override func awakeFromNib() {
     super.awakeFromNib()
+    
     // Initialization code
     self.layer.borderWidth = 1
     self.layer.borderColor = UIColor.systemBlue.cgColor

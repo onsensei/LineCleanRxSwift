@@ -14,12 +14,17 @@ import UIKit
 
 protocol NewPostDisplayLogic: class
 {
-  func displaySomething(viewModel: NewPost.Something.ViewModel)
+  func displayAlertAddPhoto(viewModel: NewPost.AlertAddPhoto.ViewModel)
+  func displayPickPhoto(viewModel: NewPost.PickPhoto.ViewModel)
+  func displayAddPhoto(viewModel: NewPost.AddPhoto.ViewModel)
+  
+  func displayAlertRemovePhoto(viewModel: NewPost.AlertRemovePhoto.ViewModel)
+  func displayRemovePhoto(viewModel: NewPost.RemovePhoto.ViewModel)
 }
 
 class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-  var interactor: NewPostBusinessLogic?
+  var interactor: (NewPostBusinessLogic & NewPostDataStore)?
   var router: (NSObjectProtocol & NewPostRoutingLogic & NewPostDataPassing)?
 
   // MARK: Object lifecycle
@@ -70,7 +75,6 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   {
     super.viewDidLoad()
     initLayout()
-    doSomething()
   }
   
   // MARK: IBOutlet
@@ -103,44 +107,119 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   
   // MARK: Do something
   
+  let CELL_SPACE:CGFloat = 8
+  let VIEW_MARGIN:CGFloat = 8
+  let MAX_PHOTOS:Int = 3
+  
   let imagePicker = UIImagePickerController()
-  var attachedPhotos:[UIImage] = []
   
   func initLayout()
   {
     title = "New Post"
     
+    // style for postTextView
     postTextView.layer.borderWidth = 1
     postTextView.layer.borderColor = UIColor(red:60/255, green:60/255, blue:67/255, alpha: 0.3).cgColor
     postTextView.layer.cornerRadius = 8
     
+    // handle dismiss keyboard
     let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
     tap.cancelsTouchesInView = false
     view.addGestureRecognizer(tap)
     
+    // setup attachedPhotoCollectionView
     attachedPhotoCollectionView.dataSource = self
     attachedPhotoCollectionView.delegate = self
     attachedPhotoCollectionView.register(UINib(nibName: "PostPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "PostPhotoCollectionViewCell")
     attachedPhotoCollectionView.register(UINib(nibName: "AddPhotoCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "AddPhotoCollectionViewCell")
     attachedPhotoCollectionView.register(UINib(nibName: "DummyCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "DummyCollectionViewCell")
     
-    let remainWidth = self.view.frame.width - (8 * 4)
-    let photoWidth = remainWidth / 3
-    attachedPhotoHeightConstraint.constant = photoWidth
+    let photoViewSize = getPhotoCellSize()
+    attachedPhotoHeightConstraint.constant = photoViewSize
 //    self.view.updateConstraints()
     
+    // setup imagePicker
     imagePicker.delegate = self
   }
   
-  func doSomething()
-  {
-    let request = NewPost.Something.Request()
-    interactor?.doSomething(request: request)
+  func getPhotoCellSize() -> CGFloat {
+    var remainWidth:CGFloat = self.view.frame.width - (VIEW_MARGIN * 2)
+    remainWidth -= CELL_SPACE * CGFloat(MAX_PHOTOS - 1)
+    let photoWidth:CGFloat = remainWidth / CGFloat(MAX_PHOTOS)
+    return photoWidth
   }
   
-  func displaySomething(viewModel: NewPost.Something.ViewModel)
+  func requestAlertAddPhoto() {
+    let request = NewPost.AlertAddPhoto.Request()
+    interactor!.requestAlertAddPhoto(request: request)
+  }
+  
+  func requestPickPhoto(imageSourceType: UIImagePickerController.SourceType) {
+    let request = NewPost.PickPhoto.Request(imageSourceType: imageSourceType)
+    interactor!.requestPickPhoto(request: request)
+  }
+  
+  func requestAddPhoto(image: UIImage) {
+    let request = NewPost.AddPhoto.Request(selectedImage: image)
+    interactor!.requestAddPhoto(request: request)
+  }
+  
+  func requestAlertRemovePhoto(photoIndex: Int)
   {
-    //nameTextField.text = viewModel.name
+    let request = NewPost.AlertRemovePhoto.Request(photoIndex: photoIndex)
+    interactor!.requestAlertRemovePhoto(request: request)
+  }
+  
+  func requestRemovePhoto(photoIndex: Int)
+  {
+    let request = NewPost.RemovePhoto.Request(photoIndex: photoIndex)
+    interactor!.requestRemovePhoto(request: request)
+  }
+  
+  // MARK: NewPostDisplayLogic
+  
+  func displayAlertAddPhoto(viewModel: NewPost.AlertAddPhoto.ViewModel) {
+    let alert = UIAlertController(title: "Add Photo", message:"Please choose photo source.", preferredStyle: UIAlertController.Style.actionSheet)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    
+    if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+      alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction!) in
+        self.requestPickPhoto(imageSourceType: .photoLibrary)
+      }))
+    }
+    
+    if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+      alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction!) in
+        self.requestPickPhoto(imageSourceType: .camera)
+      }))
+    }
+    
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  func displayPickPhoto(viewModel: NewPost.PickPhoto.ViewModel) {
+    self.imagePicker.allowsEditing = false
+    self.imagePicker.sourceType = viewModel.imageSourceType
+    self.present(self.imagePicker, animated: true, completion: nil)
+  }
+  
+  func displayAddPhoto(viewModel: NewPost.AddPhoto.ViewModel) {
+    attachedPhotoCollectionView.reloadData()
+  }
+  
+  func displayAlertRemovePhoto(viewModel: NewPost.AlertRemovePhoto.ViewModel)
+  {
+    let alert = UIAlertController(title: "Remove Photo", message:"This photo will be remove.", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { (action: UIAlertAction!) in
+      self.requestRemovePhoto(photoIndex: viewModel.photoIndex)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  func displayRemovePhoto(viewModel: NewPost.RemovePhoto.ViewModel)
+  {
+     self.attachedPhotoCollectionView.reloadData()
   }
   
   // MARK: UITextViewDelegate
@@ -172,25 +251,26 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: UICollectionViewDataSource
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 3
+    return MAX_PHOTOS
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if indexPath.row < attachedPhotos.count {
-      // photo cell
+    let photosCount = interactor!.attachedPhotos.count
+    if indexPath.row < photosCount {
+      // PostPhotoCollectionViewCell
       let cell:PostPhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostPhotoCollectionViewCell", for: indexPath as IndexPath) as! PostPhotoCollectionViewCell
       
-      let item:UIImage = attachedPhotos[indexPath.row]
-      cell.photoImageView.image = item
+      let image:UIImage = interactor!.attachedPhotos[indexPath.row]
+      cell.displayCell(image: image)
       
       return cell
-    } else if indexPath.row == attachedPhotos.count {
-      // add cell
+    } else if indexPath.row == photosCount {
+      // AddPhotoCollectionViewCell
       let cell:AddPhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPhotoCollectionViewCell", for: indexPath as IndexPath) as! AddPhotoCollectionViewCell
       
       return cell
     } else {
-      // dummy cell
+      // DummyCollectionViewCell
       let cell:DummyCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "DummyCollectionViewCell", for: indexPath as IndexPath) as! DummyCollectionViewCell
       
       return cell
@@ -200,66 +280,36 @@ class NewPostViewController: UIViewController, NewPostDisplayLogic, UITextViewDe
   // MARK: UICollectionViewDelegate
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    if indexPath.row < attachedPhotos.count {
-      // photo cell
-      let alert = UIAlertController(title: "Remove Photo", message:"This photo will be remove.", preferredStyle: UIAlertController.Style.alert)
-      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        //
-      }))
-      alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { (action: UIAlertAction!) in
-        self.attachedPhotos.remove(at: indexPath.row)
-        self.attachedPhotoCollectionView.reloadData()
-      }))
-      self.present(alert, animated: true, completion: nil)
-    } else if indexPath.row == attachedPhotos.count {
-      // add cell
-      let alert = UIAlertController(title: "Add Photo", message:"Please choose photo source.", preferredStyle: UIAlertController.Style.actionSheet)
-      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        //
-      }))
-      
-      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
-        alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction!) in
-          self.imagePicker.allowsEditing = false
-          self.imagePicker.sourceType = .photoLibrary
-          self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-      }
-      
-      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction!) in
-          self.imagePicker.allowsEditing = false
-          self.imagePicker.sourceType = .camera
-          self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-      }
-      
-      self.present(alert, animated: true, completion: nil)
+    let photosCount = interactor!.attachedPhotos.count
+    if indexPath.row < photosCount {
+      // PostPhotoCollectionViewCell
+      requestAlertRemovePhoto(photoIndex: indexPath.row)
+    } else if indexPath.row == photosCount {
+      // AddPhotoCollectionViewCell
+      requestAlertAddPhoto()
     }
   }
   
   // MARK: UICollectionViewDelegateFlowLayout
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let remainWidth = self.view.frame.width - (8 * 4)
-    let photoWidth = remainWidth / 3
-    return CGSize(width: photoWidth, height: photoWidth)
+    let photoViewSize = getPhotoCellSize()
+    return CGSize(width: photoViewSize, height: photoViewSize)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 8
+    return CELL_SPACE
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-    return 8
+    return CELL_SPACE
   }
   
   // MARK: UIImagePickerControllerDelegate
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-      attachedPhotos.append(pickedImage)
-      attachedPhotoCollectionView.reloadData()
+      requestAddPhoto(image: pickedImage)
     }
     
     dismiss(animated: true, completion: nil)
