@@ -43,27 +43,51 @@ class PostInteractorTests: XCTestCase
   
   class PostPresentationLogicSpy: PostPresentationLogic
   {
-    var presentSomethingCalled = false
-    
-    func presentSomething(response: Post.Something.Response)
+    var presentSelectedPostAlbumCalled = false
+    var presentPhotosViewerCalled = false
+
+    func presentSelectedPostAlbum(response: Post.SelectedPostAlbum.Response)
     {
-      presentSomethingCalled = true
+      presentSelectedPostAlbumCalled = true
+    }
+    
+    func presentPhotosViewer(response: Post.PhotosViewer.Response)
+    {
+      presentPhotosViewerCalled = true
     }
   }
   
   // MARK: Tests
   
-  func testDoSomething()
+  func testRequestSelectedPostAlbum()
   {
     // Given
     let spy = PostPresentationLogicSpy()
     sut.presenter = spy
-    let request = Post.Something.Request()
+    let request = Post.SelectedPostAlbum.Request()
     
     // When
-    sut.doSomething(request: request)
+    sut.requestSelectedPostAlbum(request: request)
     
     // Then
-    XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+    XCTAssertTrue(spy.presentSelectedPostAlbumCalled, "requestSelectedPostAlbum(request:) should ask the presenter to format the result")
+  }
+  
+  func testRequestPhotosViewer()
+  {
+    // Given
+    let spy = PostPresentationLogicSpy()
+    sut.presenter = spy
+    sut.postAlbum = PostAlbum(title: "Post Test Title", photos: [
+      PostPhoto(title: "Post Photo Title 00", url: "", thumbnail: ""),
+      PostPhoto(title: "Post Photo Title 01", url: "", thumbnail: "")
+    ])
+    let request = Post.PhotosViewer.Request(startIndex: 1)
+    
+    // When
+    sut.requestPhotosViewer(request: request)
+    
+    // Then
+    XCTAssertTrue(spy.presentPhotosViewerCalled, "requestPhotosViewer(request:) should ask the presenter to format the result")
   }
 }
