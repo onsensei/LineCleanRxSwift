@@ -27,4 +27,8 @@ class PostPhotoCollectionViewCell: UICollectionViewCell {
   func displayCell(image: UIImage) {
     photoImageView.image = image
   }
+  
+  func displayCell(postPhoto: PostPhoto) {
+    photoImageView.sd_setImage(with: URL(string: postPhoto.thumbnail), placeholderImage: UIImage(named: "placeholder"))
+  }
 }

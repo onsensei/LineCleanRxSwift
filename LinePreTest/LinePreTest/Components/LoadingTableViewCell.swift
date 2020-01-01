@@ -9,9 +9,16 @@
 import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
+  
+  // MARK: IBOutlet
+  
   @IBOutlet weak var spinner: UIActivityIndicatorView!
+  
+  // MARK: Cell lifecycle
+  
   override func awakeFromNib() {
     super.awakeFromNib()
+    
     // Initialization code
   }
 
