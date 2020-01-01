@@ -16,7 +16,7 @@ enum Post
 {
   // MARK: Use cases
   
-  enum Something
+  enum SelectedPostAlbum
   {
     struct Request
     {

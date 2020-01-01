@@ -15,14 +15,14 @@ import Lightbox
 
 protocol PostDisplayLogic: class
 {
-  func displaySomething(viewModel: Post.Something.ViewModel)
+  func displaySelectedPostAlbum(viewModel: Post.SelectedPostAlbum.ViewModel)
 }
 
 class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSource, UITableViewDelegate
 {
   var interactor: (PostBusinessLogic & PostDataStore)?
   var router: (NSObjectProtocol & PostRoutingLogic & PostDataPassing)?
-
+  
   // MARK: Object lifecycle
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -71,14 +71,14 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
   {
     super.viewDidLoad()
     initLayout()
-    doSomething()
+    requestSelectedPostAlbum()
   }
   
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
+  // MARK: IBOutlet
   
   @IBOutlet weak var postTableView: UITableView!
+  
+  // MARK: Do something
   
   var lightBoxVC:LightboxController?
   
@@ -90,35 +90,53 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
     postTableView.register(UINib(nibName: "PostPhotoTableViewCell", bundle: nil), forCellReuseIdentifier: "PostPhotoTableViewCell")
   }
   
-  func doSomething()
-  {
-    let request = Post.Something.Request()
-    interactor?.doSomething(request: request)
+  func requestSelectedPostAlbum() {
+    let request = Post.SelectedPostAlbum.Request()
+    interactor!.requestSelectedPostAlbum(request: request)
   }
   
-  func displaySomething(viewModel: Post.Something.ViewModel)
+  // MARK: PostDisplayLogic
+  
+  func displaySelectedPostAlbum(viewModel: Post.SelectedPostAlbum.ViewModel)
   {
-    //nameTextField.text = viewModel.name
+    postTableView.reloadData()
   }
   
   // MARK: UITableViewDataSource
   
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 2
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return (interactor?.album.photos.count)! + 1
+    if section == 0 {
+      // PostMessageTableViewCell
+      return 1
+    } else if section == 1 {
+      // PostPhotoTableViewCell
+      return interactor!.postAlbum.photos.count
+    }
+    return 0
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if (indexPath.row == 0) {
-      // message cell
+    if (indexPath.section == 0) {
+      // PostMessageTableViewCell
       let cell = tableView.dequeueReusableCell(withIdentifier: "PostMessageTableViewCell", for: indexPath) as! PostMessageTableViewCell
-      cell.titleLabel.text = interactor?.album.title
+      
+      cell.displayCell(postAlbum: interactor!.postAlbum)
+      
+      return cell
+    } else if (indexPath.section == 1) {
+      // PostPhotoTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "PostPhotoTableViewCell", for: indexPath) as! PostPhotoTableViewCell
+      
+      let photo:PostPhoto = interactor!.postAlbum.photos[indexPath.row]
+      cell.displayCell(postPhoto: photo)
+      
       return cell
     } else {
-      // photo cell
-      let item:PostPhoto = (interactor?.album.photos[indexPath.row - 1])!
-      let cell = tableView.dequeueReusableCell(withIdentifier: "PostPhotoTableViewCell", for: indexPath) as! PostPhotoTableViewCell
-      cell.photoImageView.sd_setImage(with: URL(string: item.thumbnail), placeholderImage: UIImage(named: "placeholder"))
-      return cell
+      return UITableViewCell()
     }
   }
   
@@ -127,10 +145,14 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if (indexPath.row > 0 && indexPath.row <= (interactor?.album.photos.count)!) {
-      // photo cell
+    if indexPath.section == 0 {
+      // PostMessageTableViewCell
+      // do nothing
+    } else if indexPath.section == 1 {
+      // PostPhotoTableViewCell
+      // !!!
       var images:[LightboxImage] = []
-      for photo in (interactor?.album.photos)! {
+      for photo in (interactor?.postAlbum.photos)! {
         let img: LightboxImage = LightboxImage(imageURL: URL(string: photo.url)!, text: photo.title, videoURL: nil)
         images.append(img)
       }

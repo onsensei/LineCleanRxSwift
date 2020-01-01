@@ -14,28 +14,26 @@ import UIKit
 
 protocol PostBusinessLogic
 {
-  func doSomething(request: Post.Something.Request)
+  func requestSelectedPostAlbum(request: Post.SelectedPostAlbum.Request)
 }
 
 protocol PostDataStore
 {
-  var album: PostAlbum { get set }
+  var postAlbum: PostAlbum { get set }
 }
 
 class PostInteractor: PostBusinessLogic, PostDataStore
 {
   var presenter: PostPresentationLogic?
   var worker: PostWorker?
-  var album: PostAlbum = PostAlbum(title: "", photos: [])
+  
+  var postAlbum: PostAlbum = PostAlbum(title: "", photos: [])
   
   // MARK: Do something
   
-  func doSomething(request: Post.Something.Request)
+  func requestSelectedPostAlbum(request: Post.SelectedPostAlbum.Request)
   {
-    worker = PostWorker()
-    worker?.doSomeWork()
-    
-    let response = Post.Something.Response()
-    presenter?.presentSomething(response: response)
+    let response = Post.SelectedPostAlbum.Response()
+    presenter?.presentSelectedPostAlbum(response: response)
   }
 }

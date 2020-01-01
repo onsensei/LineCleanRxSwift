@@ -14,7 +14,7 @@ import UIKit
 
 protocol PostPresentationLogic
 {
-  func presentSomething(response: Post.Something.Response)
+  func presentSelectedPostAlbum(response: Post.SelectedPostAlbum.Response)
 }
 
 class PostPresenter: PostPresentationLogic
@@ -23,9 +23,9 @@ class PostPresenter: PostPresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: Post.Something.Response)
+  func presentSelectedPostAlbum(response: Post.SelectedPostAlbum.Response)
   {
-    let viewModel = Post.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+    let viewModel = Post.SelectedPostAlbum.ViewModel()
+    viewController?.displaySelectedPostAlbum(viewModel: viewModel)
   }
 }
