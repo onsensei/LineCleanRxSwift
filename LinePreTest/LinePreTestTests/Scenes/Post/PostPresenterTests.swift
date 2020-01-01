@@ -43,27 +43,48 @@ class PostPresenterTests: XCTestCase
   
   class PostDisplayLogicSpy: PostDisplayLogic
   {
-    var displaySomethingCalled = false
+    var displaySelectedPostAlbumCalled = false
+    var displayPhotosViewerCalled = false
     
-    func displaySomething(viewModel: Post.Something.ViewModel)
-    {
-      displaySomethingCalled = true
+    func displaySelectedPostAlbum(viewModel: Post.SelectedPostAlbum.ViewModel) {
+      displaySelectedPostAlbumCalled = true
+    }
+    
+    func displayPhotosViewer(viewModel: Post.PhotosViewer.ViewModel) {
+      displayPhotosViewerCalled = true
     }
   }
   
   // MARK: Tests
   
-  func testPresentSomething()
+  func testPresentSelectedPostAlbum()
   {
     // Given
     let spy = PostDisplayLogicSpy()
     sut.viewController = spy
-    let response = Post.Something.Response()
-    
+    let response = Post.SelectedPostAlbum.Response()
+
     // When
-    sut.presentSomething(response: response)
-    
+    sut.presentSelectedPostAlbum(response: response)
+
     // Then
-    XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+    XCTAssertTrue(spy.displaySelectedPostAlbumCalled, "presentSelectedPostAlbum(response:) should ask the view controller to display the result")
+  }
+  
+  func testPresentPhotosViewer()
+  {
+    // Given
+    let spy = PostDisplayLogicSpy()
+    sut.viewController = spy
+    let response = Post.PhotosViewer.Response(startIndex: 0, photos: [
+      PostPhoto(title: "Post Photo Title 00", url: "https://lorempixel.com/1024/768/abstract/?26180", thumbnail: "https://lorempixel.com/150/150/abstract/?60610"),
+      PostPhoto(title: "Post Photo Title 01", url: "https://lorempixel.com/1024/768/abstract/?59644", thumbnail: "https://lorempixel.com/150/150/abstract/?61925")
+    ])
+
+    // When
+    sut.presentPhotosViewer(response: response)
+
+    // Then
+    XCTAssertTrue(spy.displayPhotosViewerCalled, "presentPhotosViewer(response:) should ask the view controller to display the result")
   }
 }
