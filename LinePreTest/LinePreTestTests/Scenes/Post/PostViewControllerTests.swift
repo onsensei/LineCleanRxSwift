@@ -100,4 +100,18 @@ class PostViewControllerTests: XCTestCase
     XCTAssertEqual(sut.postTableView.numberOfRows(inSection: 0), 1, "displaySelectedPostAlbum(viewModel:) should made postTableView to have 1 rows in section 0")
 //    XCTAssertEqual(sut.postTableView.numberOfRows(inSection: 1), 2, "displaySelectedPostAlbum(viewModel:) should made postTableView to have 2 rows in section 1")
   }
+  
+  func testShouldRequestPhotosViewerWhenPostPhotoTableViewCellDidSelect()
+  {
+    // Given
+    let spy = PostBusinessLogicSpy()
+    sut.interactor = spy
+    
+    // When
+    loadView()
+    sut.tableView(sut.postTableView, didSelectRowAt: IndexPath(row: 1, section: 1))
+    
+    // Then
+    XCTAssertTrue(spy.requestPhotosViewerCalled, "tableView(_, didSelectRowAt) should ask the interactor to requestPhotosViewer")
+  }
 }
