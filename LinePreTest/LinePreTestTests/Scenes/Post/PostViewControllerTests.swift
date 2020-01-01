@@ -41,7 +41,7 @@ class PostViewControllerTests: XCTestCase
   {
     let bundle = Bundle.main
     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-    sut = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+    sut = (storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController)
   }
   
   func loadView()
@@ -52,19 +52,28 @@ class PostViewControllerTests: XCTestCase
   
   // MARK: Test doubles
   
-  class PostBusinessLogicSpy: PostBusinessLogic
+  class PostBusinessLogicSpy: PostBusinessLogic, PostDataStore
   {
-    var doSomethingCalled = false
+    var postAlbum: PostAlbum = PostAlbum(title: "Post Test Title", photos: [
+      PostPhoto(title: "Post Photo Title 00", url: "", thumbnail: ""),
+      PostPhoto(title: "Post Photo Title 01", url: "", thumbnail: "")
+    ])
     
-    func doSomething(request: Post.Something.Request)
-    {
-      doSomethingCalled = true
+    var requestSelectedPostAlbumCalled = false
+    var requestPhotosViewerCalled = false
+    
+    func requestSelectedPostAlbum(request: Post.SelectedPostAlbum.Request) {
+      requestSelectedPostAlbumCalled = true
+    }
+    
+    func requestPhotosViewer(request: Post.PhotosViewer.Request) {
+      requestPhotosViewerCalled = true
     }
   }
   
   // MARK: Tests
   
-  func testShouldDoSomethingWhenViewIsLoaded()
+  func testShouldRequestSelectedPostAlbumWhenViewDidLoad()
   {
     // Given
     let spy = PostBusinessLogicSpy()
@@ -74,19 +83,21 @@ class PostViewControllerTests: XCTestCase
     loadView()
     
     // Then
-    XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+    XCTAssertTrue(spy.requestSelectedPostAlbumCalled, "viewDidLoad() should ask the interactor to requestSelectedPostAlbum")
   }
   
-  func testDisplaySomething()
+  func testDisplaySelectedPostAlbum()
   {
     // Given
-    let viewModel = Post.Something.ViewModel()
+    let viewModel = Post.SelectedPostAlbum.ViewModel()
     
     // When
     loadView()
-    sut.displaySomething(viewModel: viewModel)
+    sut.displaySelectedPostAlbum(viewModel: viewModel)
     
     // Then
-    //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+    XCTAssertEqual(sut.postTableView.numberOfSections, 2, "displaySelectedPostAlbum(viewModel:) should made postTableView to have 2 sections")
+    XCTAssertEqual(sut.postTableView.numberOfRows(inSection: 0), 1, "displaySelectedPostAlbum(viewModel:) should made postTableView to have 1 rows in section 0")
+//    XCTAssertEqual(sut.postTableView.numberOfRows(inSection: 1), 2, "displaySelectedPostAlbum(viewModel:) should made postTableView to have 2 rows in section 1")
   }
 }
