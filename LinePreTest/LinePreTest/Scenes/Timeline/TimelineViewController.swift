@@ -15,7 +15,8 @@ import JGProgressHUD
 
 protocol TimelineDisplayLogic: class
 {
-  func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
+  func displayTimelineNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
+  func displayFilteredNewsFeed(viewModel: Timeline.FilteredNewsFeed.ViewModel)
 }
 
 class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate
@@ -84,12 +85,7 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     router?.routeToNewPost(segue: nil)
   }
   
-  // MARK: Do something
-  
-  var newsFeedDatasource:[PostAlbum] = []
-  var filteredNewsFeedDatasource:[PostAlbum] = []
-  
-  let hud = JGProgressHUD(style: .dark)
+  // MARK: Pull to Refresh
   
   lazy var refreshControl: UIRefreshControl = {
     let refreshControl = UIRefreshControl()
@@ -98,6 +94,17 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
                              for: UIControl.Event.valueChanged)
     return refreshControl
   }()
+  
+  @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+    requestRefreshNewsFeed()
+    refreshControl.endRefreshing()
+  }
+  
+  // MARK: Do something
+  
+  var newsFeedDatasource:[PostAlbum] = []
+  
+  let hud = JGProgressHUD(style: .dark)
   
   func initLayout()
   {
@@ -113,37 +120,48 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     hud.textLabel.text = "Loading"
     hud.show(in: self.view)
     
-    let request = Timeline.NewsFeed.Request(token: "kIRtPjxyscyQoVCyBDfvIkUm1Sci7UW-a-zH")
-    interactor?.fetchNewsFeed(request: request)
+    let request = Timeline.NewsFeed.Request(requestType: .first)
+    interactor!.requestNewsFeed(request: request)
   }
   
-  @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-    requestTimelineNewsFeed()
-    refreshControl.endRefreshing()
+  func requestRefreshNewsFeed() {
+    hud.textLabel.text = "Loading"
+    hud.show(in: self.view)
+    
+    let request = Timeline.NewsFeed.Request(requestType: .refresh)
+    interactor!.requestNewsFeed(request: request)
+  }
+  
+  func requestFilteredNewsFeed(searchText:String) {
+    let request = Timeline.FilteredNewsFeed.Request(searchText: searchText)
+    interactor!.requestFilteredNewsFeed(request: request)
   }
   
   // MARK: TimelineDisplayLogic
   
-  func displayNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
+  func displayTimelineNewsFeed(viewModel: Timeline.NewsFeed.ViewModel)
   {
     newsFeedDatasource = viewModel.postAlbums
-    filteredNewsFeedDatasource = viewModel.postAlbums
-    
     newsfeedTableView.reloadData()
     
     hud.dismiss()
   }
   
+  func displayFilteredNewsFeed(viewModel: Timeline.FilteredNewsFeed.ViewModel) {
+    newsFeedDatasource = viewModel.postAlbums
+    newsfeedTableView.reloadData()
+  }
+  
   // MARK: UITableViewDataSource
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return filteredNewsFeedDatasource.count
+    return newsFeedDatasource.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
-    let item:PostAlbum = filteredNewsFeedDatasource[indexPath.row]
+    let item:PostAlbum = newsFeedDatasource[indexPath.row]
     cell.displayCell(postAlbum: item)
 
     return cell
@@ -156,23 +174,15 @@ class TimelineViewController: UIViewController, TimelineDisplayLogic, UITableVie
     
     self.view.endEditing(true)
     
-    let item:PostAlbum = filteredNewsFeedDatasource[indexPath.row]
-    interactor?.album = item
+    let item:PostAlbum = newsFeedDatasource[indexPath.row]
+    interactor?.selectedPostAlbum = item
     router?.routeToPost(segue: nil)
   }
   
   // MARK: UISearchBarDelegate
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    if searchText.count > 0 {
-      filteredNewsFeedDatasource = newsFeedDatasource.filter { (album) -> Bool in
-        return album.title.lowercased().contains(searchText.lowercased())
-      }
-    } else {
-      filteredNewsFeedDatasource = newsFeedDatasource
-    }
-    
-    newsfeedTableView.reloadData()
+    requestFilteredNewsFeed(searchText: searchText)
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

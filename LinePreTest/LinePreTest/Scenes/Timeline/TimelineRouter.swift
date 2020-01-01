@@ -97,6 +97,6 @@ class TimelineRouter: NSObject, TimelineRoutingLogic, TimelineDataPassing
   
   func passDataToPost(source: TimelineDataStore, destination: inout PostDataStore)
   {
-    destination.postAlbum = source.album
+    destination.postAlbum = source.selectedPostAlbum
   }
 }

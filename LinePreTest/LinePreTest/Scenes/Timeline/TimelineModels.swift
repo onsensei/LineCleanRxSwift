@@ -99,6 +99,13 @@ struct PostPhoto
   var thumbnail:String
 }
 
+enum RequestNewsFeedType
+{
+  case first
+  case refresh
+//  case append
+}
+
 enum Timeline
 {
   // MARK: Use cases
@@ -107,11 +114,28 @@ enum Timeline
   {
     struct Request
     {
-      var token:String
+      var requestType:RequestNewsFeedType
     }
     struct Response
     {
-      var album:ResponseAlbum
+      var resultAlbums:[ResultAlbum]
+      var albumPhotosDict:[String:ResponsePhoto]
+    }
+    struct ViewModel
+    {
+      var postAlbums:[PostAlbum]
+    }
+  }
+  
+  enum FilteredNewsFeed
+  {
+    struct Request
+    {
+      var searchText:String
+    }
+    struct Response
+    {
+      var resultAlbums:[ResultAlbum]
       var albumPhotosDict:[String:ResponsePhoto]
     }
     struct ViewModel

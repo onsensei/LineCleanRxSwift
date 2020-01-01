@@ -15,6 +15,7 @@ import UIKit
 protocol TimelinePresentationLogic
 {
   func presentNewsFeed(response: Timeline.NewsFeed.Response)
+  func presentFilteredNewsFeed(response: Timeline.FilteredNewsFeed.Response)
 }
 
 class TimelinePresenter: TimelinePresentationLogic
@@ -23,24 +24,45 @@ class TimelinePresenter: TimelinePresentationLogic
   
   // MARK: Do something
   
-  func presentNewsFeed(response: Timeline.NewsFeed.Response)
-  {
-    var posts:[PostAlbum] = []
-    response.album.result.forEach { (element) in
+  let MAX_PHOTOS:Int = 3
+  
+  func getPostAlbumsWith(resultAlbums: [ResultAlbum], albumPhotosDict: [String:ResponsePhoto]) -> [PostAlbum] {
+    var postAlbums:[PostAlbum] = []
+    resultAlbums.forEach { (element) in
       let title = element.title
       
-      let responsePhoto = response.albumPhotosDict[element.id]
+      let responsePhoto = albumPhotosDict[element.id]
       var photos:[PostPhoto] = []
-      for item in responsePhoto!.result {
-        let photo = PostPhoto(title: item.title, url: item.url, thumbnail: item.thumbnail)
-        photos.append(photo)
+      if responsePhoto != nil {
+        for item in responsePhoto!.result {
+          let photo = PostPhoto(title: item.title, url: item.url, thumbnail: item.thumbnail)
+          photos.append(photo)
+          
+          if photos.count >= MAX_PHOTOS {
+            break
+          }
+        }
       }
       
-      let post = PostAlbum(title: title, photos: photos)
-      posts.append(post)
+      let postAlbum = PostAlbum(title: title, photos: photos)
+      postAlbums.append(postAlbum)
     }
     
+    return postAlbums
+  }
+  
+  func presentNewsFeed(response: Timeline.NewsFeed.Response)
+  {
+    let posts:[PostAlbum] = getPostAlbumsWith(resultAlbums: response.resultAlbums, albumPhotosDict: response.albumPhotosDict)
+    
     let viewModel = Timeline.NewsFeed.ViewModel(postAlbums: posts)
-    viewController?.displayNewsFeed(viewModel: viewModel)
+    viewController?.displayTimelineNewsFeed(viewModel: viewModel)
+  }
+  
+  func presentFilteredNewsFeed(response: Timeline.FilteredNewsFeed.Response) {
+    let posts:[PostAlbum] = getPostAlbumsWith(resultAlbums: response.resultAlbums, albumPhotosDict: response.albumPhotosDict)
+    
+    let viewModel = Timeline.FilteredNewsFeed.ViewModel(postAlbums: posts)
+    viewController?.displayFilteredNewsFeed(viewModel: viewModel)
   }
 }

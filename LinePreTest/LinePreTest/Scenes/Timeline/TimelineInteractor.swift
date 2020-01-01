@@ -13,32 +13,36 @@
 import UIKit
 import Alamofire
 
+let TOKEN:String = "kIRtPjxyscyQoVCyBDfvIkUm1Sci7UW-a-zH"
+
 protocol TimelineBusinessLogic
 {
-  func fetchNewsFeed(request: Timeline.NewsFeed.Request)
+  func requestNewsFeed(request: Timeline.NewsFeed.Request)
+  func requestFilteredNewsFeed(request: Timeline.FilteredNewsFeed.Request)
 }
 
 protocol TimelineDataStore
 {
-  var album: PostAlbum { get set }
+  var fetchedResultAlbums: [ResultAlbum] { get set }
+  var fetchedAlbumPhotosDict: [String:ResponsePhoto] { get set }
+  var selectedPostAlbum: PostAlbum { get set }
 }
 
 class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
 {
   var presenter: TimelinePresentationLogic?
   var worker: TimelineWorker?
-  var album: PostAlbum = PostAlbum(title: "", photos: [])
+  
+  var fetchedResultAlbums: [ResultAlbum] = []
+  var fetchedAlbumPhotosDict: [String:ResponsePhoto] = [:]
+  var selectedPostAlbum: PostAlbum = PostAlbum(title: "", photos: [])
   
   // MARK: Do something
   
-  func fetchNewsFeed(request: Timeline.NewsFeed.Request)
+  func requestNewsFeed(request: Timeline.NewsFeed.Request)
   {
-    //!!!
-//    worker = TimelineWorker()
-//    worker?.doSomeWork()
-    
     let headers = [
-      "Authorization" : "Bearer \(request.token)"
+      "Authorization" : "Bearer \(TOKEN)"
     ]
     Alamofire.request("https://gorest.co.in/public-api/albums", method: .get, headers: headers)
       .responseJSON { response in
@@ -81,44 +85,70 @@ class TimelineInteractor: TimelineBusinessLogic, TimelineDataStore
     var albumPhotosDict:[String:ResponsePhoto] = [:]
     for item in responseAlbum.result {
       let headers = [
-        "Authorization" : "Bearer \(request.token)"
+        "Authorization" : "Bearer \(TOKEN)"
       ]
       Alamofire.request("https://gorest.co.in/public-api/photos?album_id=\(item.id)", method: .get, headers: headers)
-            .responseJSON { response in
-              //to get status code
-              if let status = response.response?.statusCode {
-                switch(status){
-                case 200:
-                  //to get JSON return value
-                  if let jsonResult = response.result.value {
-                    do {
-                      let jsonData = try JSONSerialization.data(withJSONObject: jsonResult, options: .prettyPrinted)
-                      let jsonString = String(data: jsonData, encoding: .utf8)
-                      let data = jsonString?.data(using: .utf8)
-                      let jsonDecoder = JSONDecoder()
-                      let responsePhoto = try jsonDecoder.decode(ResponsePhoto.self, from: data!)
-                      
-                      albumPhotosDict[item.id] = responsePhoto
-                    } catch {
-                      print("!!! json parser error: \(error)")
-                    }
-                  } else {
-                    print("!!! not found json body")
-                  }
-                default:
-                  print("!!! error with response status: \(status)")
+        .responseJSON { response in
+          //to get status code
+          if let status = response.response?.statusCode {
+            switch(status){
+            case 200:
+              //to get JSON return value
+              if let jsonResult = response.result.value {
+                do {
+                  let jsonData = try JSONSerialization.data(withJSONObject: jsonResult, options: .prettyPrinted)
+                  let jsonString = String(data: jsonData, encoding: .utf8)
+                  let data = jsonString?.data(using: .utf8)
+                  let jsonDecoder = JSONDecoder()
+                  let responsePhoto = try jsonDecoder.decode(ResponsePhoto.self, from: data!)
+                  
+                  albumPhotosDict[item.id] = responsePhoto
+                } catch {
+                  print("!!! json parser error: \(error)")
                 }
               } else {
-                print("!!! not found status code")
+                print("!!! not found json body")
               }
-              
-              // remove used id
-              pendingAlbumIds = pendingAlbumIds.filter {$0 != item.id}
-              if (pendingAlbumIds.count == 0) {
-                let response = Timeline.NewsFeed.Response(album: responseAlbum, albumPhotosDict: albumPhotosDict)
-                self.presenter?.presentNewsFeed(response: response)
-              }
+            default:
+              print("!!! error with response status: \(status)")
+            }
+          } else {
+            print("!!! not found status code")
           }
+          
+          // remove used id
+          pendingAlbumIds = pendingAlbumIds.filter {$0 != item.id}
+          if (pendingAlbumIds.count == 0) {
+            self.fetchCompleted(request: request, responseAlbum: responseAlbum, albumPhotosDict: albumPhotosDict)
+          }
+      }
+    }
+  }
+  
+  func fetchCompleted(request: Timeline.NewsFeed.Request, responseAlbum: ResponseAlbum, albumPhotosDict: [String:ResponsePhoto]) {
+    if request.requestType == .refresh {
+      fetchedResultAlbums.removeAll()
+      fetchedAlbumPhotosDict.removeAll()
+    }
+
+    fetchedResultAlbums.append(contentsOf: responseAlbum.result)
+    fetchedAlbumPhotosDict.merge(albumPhotosDict) { (_, new) in new }
+    
+    let response = Timeline.NewsFeed.Response(resultAlbums: fetchedResultAlbums, albumPhotosDict: fetchedAlbumPhotosDict)
+    self.presenter?.presentNewsFeed(response: response)
+  }
+  
+  func requestFilteredNewsFeed(request: Timeline.FilteredNewsFeed.Request) {
+    if request.searchText.count > 0 {
+      let filteredResultAlbums = fetchedResultAlbums.filter { (resultAlbum) -> Bool in
+        return resultAlbum.title.lowercased().contains(request.searchText.lowercased())
+      }
+      
+      let response = Timeline.FilteredNewsFeed.Response(resultAlbums: filteredResultAlbums, albumPhotosDict: fetchedAlbumPhotosDict)
+      self.presenter?.presentFilteredNewsFeed(response: response)
+    } else {
+      let response = Timeline.FilteredNewsFeed.Response(resultAlbums: fetchedResultAlbums, albumPhotosDict: fetchedAlbumPhotosDict)
+      self.presenter?.presentFilteredNewsFeed(response: response)
     }
   }
 }
