@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0B795CADC3B82705EBF3E9ED /* Pods_LinePreTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBCEA9A74A937ACEC69D679 /* Pods_LinePreTestUITests.framework */; };
+		500D0B5323BC8E700012E184 /* PostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500D0B4F23BC8E700012E184 /* PostViewControllerTests.swift */; };
+		500D0B5423BC8E700012E184 /* PostInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500D0B5023BC8E700012E184 /* PostInteractorTests.swift */; };
+		500D0B5523BC8E700012E184 /* PostWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500D0B5123BC8E700012E184 /* PostWorkerTests.swift */; };
+		500D0B5623BC8E700012E184 /* PostPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500D0B5223BC8E700012E184 /* PostPresenterTests.swift */; };
 		506B76AF23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */; };
 		506B76B023B8A54700433AD0 /* PostPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */; };
 		50C7295123B71D3B00D5E0B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7295023B71D3B00D5E0B4 /* AppDelegate.swift */; };
@@ -74,6 +78,10 @@
 		29AE11F6A7E90B6A760343BD /* Pods-LinePreTestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestUITests/Pods-LinePreTestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2D1DDD45C6D79DC49B03C7C0 /* Pods-LinePreTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinePreTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LinePreTestTests/Pods-LinePreTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		35B0A4B515AD92B6B705A993 /* Pods_LinePreTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinePreTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		500D0B4F23BC8E700012E184 /* PostViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewControllerTests.swift; sourceTree = "<group>"; };
+		500D0B5023BC8E700012E184 /* PostInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInteractorTests.swift; sourceTree = "<group>"; };
+		500D0B5123BC8E700012E184 /* PostWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkerTests.swift; sourceTree = "<group>"; };
+		500D0B5223BC8E700012E184 /* PostPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPresenterTests.swift; sourceTree = "<group>"; };
 		506B76A923B74F5000433AD0 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		506B76AD23B8A54700433AD0 /* PostPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		506B76AE23B8A54700433AD0 /* PostPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -156,6 +164,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		500D0B4B23BC8E010012E184 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				500D0B4C23BC8E0E0012E184 /* Timeline */,
+				500D0B4D23BC8E150012E184 /* NewPost */,
+				500D0B4E23BC8E260012E184 /* Post */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		500D0B4C23BC8E0E0012E184 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		500D0B4D23BC8E150012E184 /* NewPost */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NewPost;
+			sourceTree = "<group>";
+		};
+		500D0B4E23BC8E260012E184 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				500D0B4F23BC8E700012E184 /* PostViewControllerTests.swift */,
+				500D0B5023BC8E700012E184 /* PostInteractorTests.swift */,
+				500D0B5123BC8E700012E184 /* PostWorkerTests.swift */,
+				500D0B5223BC8E700012E184 /* PostPresenterTests.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		50C7294423B71D3B00D5E0B4 = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +240,7 @@
 		50C7296623B71D3F00D5E0B4 /* LinePreTestTests */ = {
 			isa = PBXGroup;
 			children = (
+				500D0B4B23BC8E010012E184 /* Scenes */,
 				50C7296723B71D3F00D5E0B4 /* LinePreTestTests.swift */,
 				50C7296923B71D3F00D5E0B4 /* Info.plist */,
 			);
@@ -586,7 +630,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500D0B5323BC8E700012E184 /* PostViewControllerTests.swift in Sources */,
+				500D0B5423BC8E700012E184 /* PostInteractorTests.swift in Sources */,
+				500D0B5623BC8E700012E184 /* PostPresenterTests.swift in Sources */,
 				50C7296823B71D3F00D5E0B4 /* LinePreTestTests.swift in Sources */,
+				500D0B5523BC8E700012E184 /* PostWorkerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +840,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTestTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -814,6 +863,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTestTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -835,6 +885,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -855,6 +906,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 97P6EHKEC6;
 				INFOPLIST_FILE = LinePreTestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
