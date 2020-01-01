@@ -16,6 +16,7 @@ import Lightbox
 protocol PostDisplayLogic: class
 {
   func displaySelectedPostAlbum(viewModel: Post.SelectedPostAlbum.ViewModel)
+  func displayPhotosViewer(viewModel: Post.PhotosViewer.ViewModel)
 }
 
 class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSource, UITableViewDelegate
@@ -95,11 +96,24 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
     interactor!.requestSelectedPostAlbum(request: request)
   }
   
+  func requestPhotosViewer(startIndex: Int) {
+    let request = Post.PhotosViewer.Request(startIndex: startIndex)
+    interactor!.requestPhotosViewer(request: request)
+  }
+  
   // MARK: PostDisplayLogic
   
   func displaySelectedPostAlbum(viewModel: Post.SelectedPostAlbum.ViewModel)
   {
     postTableView.reloadData()
+  }
+  
+  func displayPhotosViewer(viewModel: Post.PhotosViewer.ViewModel)
+  {
+    lightBoxVC = LightboxController(images: viewModel.images, startIndex: viewModel.startIndex)
+    lightBoxVC!.dynamicBackground = true
+    lightBoxVC!.modalPresentationStyle = .fullScreen
+    present(lightBoxVC!, animated: true, completion: nil)
   }
   
   // MARK: UITableViewDataSource
@@ -150,17 +164,7 @@ class PostViewController: UIViewController, PostDisplayLogic, UITableViewDataSou
       // do nothing
     } else if indexPath.section == 1 {
       // PostPhotoTableViewCell
-      // !!!
-      var images:[LightboxImage] = []
-      for photo in (interactor?.postAlbum.photos)! {
-        let img: LightboxImage = LightboxImage(imageURL: URL(string: photo.url)!, text: photo.title, videoURL: nil)
-        images.append(img)
-      }
-      
-      lightBoxVC = LightboxController(images: images, startIndex: indexPath.row - 1)
-      lightBoxVC!.dynamicBackground = true
-      lightBoxVC!.modalPresentationStyle = .fullScreen
-      present(lightBoxVC!, animated: true, completion: nil)
+      requestPhotosViewer(startIndex: indexPath.row)
     }
   }
 }

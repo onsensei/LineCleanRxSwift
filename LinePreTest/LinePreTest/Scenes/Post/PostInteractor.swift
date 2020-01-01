@@ -15,6 +15,7 @@ import UIKit
 protocol PostBusinessLogic
 {
   func requestSelectedPostAlbum(request: Post.SelectedPostAlbum.Request)
+  func requestPhotosViewer(request: Post.PhotosViewer.Request)
 }
 
 protocol PostDataStore
@@ -35,5 +36,10 @@ class PostInteractor: PostBusinessLogic, PostDataStore
   {
     let response = Post.SelectedPostAlbum.Response()
     presenter?.presentSelectedPostAlbum(response: response)
+  }
+  
+  func requestPhotosViewer(request: Post.PhotosViewer.Request) {
+    let response = Post.PhotosViewer.Response(startIndex: request.startIndex, photos: postAlbum.photos)
+    presenter?.presentPhotosViewer(response: response)
   }
 }

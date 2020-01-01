@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Lightbox
 
 enum Post
 {
@@ -26,6 +27,24 @@ enum Post
     }
     struct ViewModel
     {
+    }
+  }
+  
+  enum PhotosViewer
+  {
+    struct Request
+    {
+      var startIndex:Int
+    }
+    struct Response
+    {
+      var startIndex:Int
+      var photos:[PostPhoto]
+    }
+    struct ViewModel
+    {
+      var startIndex:Int
+      var images:[LightboxImage]
     }
   }
 }

@@ -11,10 +11,12 @@
 //
 
 import UIKit
+import Lightbox
 
 protocol PostPresentationLogic
 {
   func presentSelectedPostAlbum(response: Post.SelectedPostAlbum.Response)
+  func presentPhotosViewer(response: Post.PhotosViewer.Response)
 }
 
 class PostPresenter: PostPresentationLogic
@@ -27,5 +29,17 @@ class PostPresenter: PostPresentationLogic
   {
     let viewModel = Post.SelectedPostAlbum.ViewModel()
     viewController?.displaySelectedPostAlbum(viewModel: viewModel)
+  }
+  
+  func presentPhotosViewer(response: Post.PhotosViewer.Response)
+  {
+    var images:[LightboxImage] = []
+    for photo in response.photos {
+      let img: LightboxImage = LightboxImage(imageURL: URL(string: photo.url)!, text: photo.title, videoURL: nil)
+      images.append(img)
+    }
+    
+    let viewModel = Post.PhotosViewer.ViewModel(startIndex: response.startIndex, images: images)
+    viewController?.displayPhotosViewer(viewModel: viewModel)
   }
 }
